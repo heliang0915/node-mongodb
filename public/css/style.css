@@ -1,0 +1,25 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+table{
+  width:100%;
+}
+table th{
+  background: #D1D7DC;
+}
+table th,table tr{
+  text-align: center;
+  width: 30%;
+  line-height: 30px;
+}
+table tr{
+  line-height:40px;
+}
+.check{
+  width:10% !important;
+}
