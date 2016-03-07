@@ -22,6 +22,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//上传默认目录
+//app.use(express.bodyParser({uploadDir:'./uploads'}));
+console.log(express.bodyParser);
+
 app.use('/', routes);
 app.use('/users', users);
 

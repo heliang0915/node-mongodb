@@ -1,15 +1,16 @@
 /**
  * Created by helia on 2016/3/6.
  */
-
+//加载数据
 $(function(){
-
+   //全选
    $('#selectAll').on('click',function(){
        var _this=this;
        $('input[name="check"]').each(function(){
              $(this).prop("checked",$(_this).is(":checked"));
         })
    });
+
 
     $("tr:odd").css("background","#cdfcdf")
 
@@ -30,7 +31,7 @@ $(function(){
         data.password="123456";
         operation('/add',data);
     }
-
+    //编辑
     function edit(){
         var data={};
         var uuid= $('input[name="check"]:checked').val();
@@ -39,7 +40,7 @@ $(function(){
         data.password="345678";
         operation('/edit',data);
     }
-
+    //删除
     function del(){
         var data={};
         var str="";
@@ -55,6 +56,12 @@ $(function(){
         operation('/del',data);
     }
 
+    //上传
+    function  upload(){
+
+    }
+
+    //操作接口
     function  operation(url,data){
         $.ajax({
             type:'post',

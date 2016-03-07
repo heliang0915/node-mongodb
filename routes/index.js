@@ -57,4 +57,11 @@ router.route('/del').post(function (req, res) {
     res.write(str);
     res.end();
 });
+
+router.route('/upload').post(function(req,res){
+    console.log("上传....")
+});
+
+
+
 module.exports = router;
