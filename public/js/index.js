@@ -72,11 +72,11 @@ function upload() {
     })
 }
 
-function uploadSuccess(err, path) {
-    alert("上传...");
+function uploadSuccess(err, fileName) {
     if (err) {
-        alert("上传出错");
+        alert("上传出错"+err);
     } else {
+        var  path="/upload/show/"+fileName;
         $('#img').attr('src', path);
     }
 }
