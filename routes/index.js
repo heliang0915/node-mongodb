@@ -2,7 +2,13 @@ var express = require('express');
 var userDao = require('../dao/userDao');
 var url = require("url");
 var md5util=require("../util/md5");
+var multiparty = require('multiparty');
+var fs=require('fs');
+var url=require('url');
+var qs = require('querystring');
+
 var router = express.Router();
+var uploadDir='../uploaddir/';
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -57,11 +63,43 @@ router.route('/del').post(function (req, res) {
     res.write(str);
     res.end();
 });
-
-router.route('/upload').post(function(req,res){
-    console.log("上传....")
+/* 上传*/
+router.post('/upload', function(req, res, next){
+    //生成multiparty对象，并配置上传目标路径
+    var form = new multiparty.Form({uploadDir:uploadDir});
+    //console.log(form);
+    //上传完成后处理
+    form.parse(req, function(err, fields, files) {
+        //console.log("上传..."+err, fields, files);
+        var filesTmp = JSON.stringify(files,null,2);
+        //console.log(err);
+        if(err){
+            console.log('parse error: ' + err);
+        } else {
+            //console.log('parse files: ' + filesTmp);
+            var inputFile = files.upFile[0];
+            var uploadedPath = inputFile.path;
+            var dstPath =uploadDir+ inputFile.originalFilename;
+            //重命名为真实文件名
+            fs.rename(uploadedPath, dstPath, function(err) {
+                if(err){
+                    console.log('rename error: ' + err);
+                    res.write("<script>parent.uploadSuccess('"+err+"')</script>");
+                } else {
+                    res.write("<script>parent.uploadSuccess(null,'"+dstPath+"')</script>");
+                }
+                res.end();
+            });
+        }
+        //res.writeHead(200, {'content-type': 'text/plain;charset=utf-8'});
+        //res.write('received upload:\n\n');
+        //res.end(util.inspect({fields: fields, files: filesTmp}));
+    });
 });
 
-
+router.get('/uploaddir',function(req,res){
+        var queryUrl=url.parse(req.url).query;
+        console.log(qs.parse(queryUrl)) ;
+})
 
 module.exports = router;
