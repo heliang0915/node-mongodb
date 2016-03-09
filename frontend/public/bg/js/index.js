@@ -71,12 +71,12 @@ function upload() {
         }
     })
 }
-
+//上传成功
 function uploadSuccess(err, fileName) {
     if (err) {
         alert("上传出错"+err);
     } else {
-        var  path="/upload/show/"+fileName;
+        var  path="/download/"+fileName+"/"+true;
         $('#img').attr('src', path);
     }
 }

@@ -1,0 +1,4 @@
+后端公共资源 目前是处理上传和下载请求的组件
+
+http://localhost:3000/download/active_09.png/true 最后一个参数为true则以附件的形式下载
+最后一个参数为false时则以浏览器默认的行为打开文件

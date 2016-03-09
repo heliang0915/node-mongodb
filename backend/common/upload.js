@@ -1,28 +1,15 @@
+/**
+ * 文件上传组件处理  @heliang
+ * @type {*|exports|module.exports}
+ */
 var express = require('express');
 var router = express.Router();
 var multiparty=require('multiparty');
 var fs=require('fs');
+//获取配置对象
+var config = require('../config');
 var util = require("../util/util");
-var uploadDir = '../uploaddir/';
-
-
-
-router.get('/show/:path?/',function(req, res, next) {
-    console.log('jijijijij');
-    var path=uploadDir+req.params.path;
-    fs.readFile(path, function (error, file) {
-       // console.log(error);
-        if (error) {
-            res.writeHead(500, {"Content-Type": "text/plain"});
-            res.write(error + "\n");
-            res.end();
-        } else {
-            res.writeHead(200, {"Content-Type": "image/png"});
-            res.write(file);
-            res.end();
-        }
-    });
-});
+var uploadDir = config.uploadDir;
 
 /* GET users listing. */
 router.all('/', function(req, res, next) {
@@ -31,13 +18,10 @@ router.all('/', function(req, res, next) {
     //console.log(form);
     //上传完成后处理
     form.parse(req, function (err, fields, files) {
-        //console.log("上传..."+err, fields, files);
         var filesTmp = JSON.stringify(files, null, 2);
-        //console.log(err);
         if (err) {
             console.log('parse error: ' + err);
         } else {
-            //console.log('parse files: ' + filesTmp);
             var inputFile = files.upFile[0];
             console.log(files);
             var uploadedPath = inputFile.path;
