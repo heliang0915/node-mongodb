@@ -3,6 +3,9 @@ var mongoose = require('mongoose');
 var util = require('util');
 var uuid = require('node-uuid');
 var modelPath = "../model/";
+//全局配置对象
+var config = require('../config');
+
 //获取users的schema
 var modelName;
 var ModelSchema;
@@ -10,7 +13,7 @@ var model;
 
 exports.setModelName = function (modelNa) {
     modelName = modelNa;
-    model = require(modelPath + modelName);
+    model = require(modelPath +"schemas");
     ModelSchema = mongoose.model(modelName);
 
 }
@@ -76,7 +79,6 @@ exports.edit = function (uuid, editObj, callback) {
 
 /*删除*/
 exports.del = function (uuids, callback) {
-
     callback = callback == undefined ? function () {} : callback;
     console.log("uuids>>>"+uuids)
     var uuidAry=[];
@@ -105,10 +107,64 @@ exports.del = function (uuids, callback) {
 
 /*查询*/
 exports.findAll = function (callback) {
-    callback = callback == undefined ? function () {
-    } : callback;
+    findByData({},callback);
+}
+
+
+exports.find=function(data,callback){
+    callback = callback == undefined ? function () {} : callback;
+    model[modelName].find(data, function (err, models) {
+        if (err) {
+            callback(err)
+        } else {
+            callback(null, models);
+        }
+    });
+}
+
+//根据条件查询数量
+exports.count=function(data,callback){
+    count(data,callback);
+}
+
+//分页
+exports.page=function(currentPage,data,callback,sortFile){
+    //查询总数
+    count(data,function(err, total) {
+        if (err) {
+            callback(err)
+        } else {
+            var pageSize=config.pageSize;
+            var start=(currentPage-1)*pageSize;
+            console.log("start>>>>"+start);
+            var desc={};
+            desc["order"]=-1;
+            if(sortFile){
+                desc=sortFile;
+            }
+            console.log("--------------------------------------"+sortFile);
+            model[modelName].find(data, function (err, models) {
+                console.log(models);
+                if (err) {
+                    callback(err)
+                } else {
+                    callback(null, models);
+                }
+            }).sort(desc).skip(start).limit(config.pageSize);
+        }
+    });
+}
+exports.count=function(data,callback){
+        count(data,callback);
+}
+
+
+
+//根据条件查询数据
+var findByData=function(data,callback){
+    callback = callback == undefined ? function () {} : callback;
     //console.log(  model[modelName].find);
-    model[modelName].find({}, function (err, models) {
+    model[modelName].find(data, function (err, models) {
         if (err) {
             callback(err)
         } else {
@@ -117,6 +173,23 @@ exports.findAll = function (callback) {
     });
 
 }
+
+
+//根据条件查询数量
+var count=function(data,callback){
+    data=data==undefined?{}:data;
+    callback = callback == undefined ? function () {} : callback;
+    model[modelName].count(data,function(err,len){
+        if (err) {
+            callback(err)
+        } else {
+            callback(null, len);
+            console.log("count>>>>"+len);
+        }
+    })
+
+}
+
 /*根据uuid查询单条数据*/
 var findByUUID = exports.findByUUID = function (uuid, callback) {
     callback = callback == undefined ? function () {

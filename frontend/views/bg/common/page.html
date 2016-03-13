@@ -1,0 +1,11 @@
+<div class="page">
+    <div id="pagination" class="pagination"><!-- 这里显示分页 --></div>
+    <div class="total">
+        共<em id="total"><%=totalCount%></em>条，当前第<em id="current">1</em>页，每页显示<em><%=pageSize%></em>条
+    </div>
+</div>
+<script>
+    var totalCount=<%=totalCount%>;
+    var pageSize=<%=pageSize%>;
+    var totalPage=Math.ceil(totalCount/pageSize);
+</script>
