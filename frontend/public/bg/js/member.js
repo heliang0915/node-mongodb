@@ -32,6 +32,9 @@ require(['util','page'],function(util,pagination){
    // layer.msg('加载中...', {icon: 16});
     //// 创建分页
 
+    //
+    $(".toolbar, .content, .footer").css("width","98%");
+
     pagination("pagination",{
         num_entries:totalPage,
         num_edge_entries: 1, //边缘页数
