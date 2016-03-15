@@ -40,19 +40,28 @@ exports.createStaticHTML=function(id,htmlTel,data){
     var path=staticHTMLPath+id+".html";
     //var rs=fs.createReadStream(path);
     fs.exists(path,function(err, stats){
-
-        var ws=fs.createWriteStream(staticHTMLPath+id+".html");
-        htmlTel="<html><head><title>静态文件</title></head><body>内容+"+data+"</body></html>";
-        ws.write(htmlTel);
-        ws.end();
-        console.log("产生....");
-
+        if(err){
+            console.log(err);
+            fs.writeFile(path,"",function(){
+                createHTMLByTemplate(path,data);
+            })
+        }else{
+            createHTMLByTemplate(path,data)
+        }
     })
-
 
 }
 
 exports.reloadStaticHTML=reloadStaticHTML;
+
+
+function createHTMLByTemplate(path,data){
+    var ws=fs.createWriteStream(path);
+    htmlTel="<html><head><title>静态文件</title></head><body>内容+"+data+"</body></html>";
+    ws.write(htmlTel);
+    ws.end();
+    console.log("产生....");
+}
 
 function  reloadStaticHTML(id){
  console.log("重新生成"+id+".html");
