@@ -38,31 +38,23 @@ exports.getParams=function(req){
 exports.createStaticHTML=function(id,htmlTel,data){
     var staticHTMLPath=config.staticHTMLPath;
     var path=staticHTMLPath+id+".html";
-    fs.exists(path,function(stats){
-        console.log(stats);
+    //var rs=fs.createReadStream(path);
+    fs.exists(path,function(err, stats){
 
-        if(!stats){
-            fs.writeFile(path,"",function(){
-                var ws=fs.createWriteStream(staticHTMLPath+id+".html");
-                htmlTel="<html><head><title>静态文件</title></head><body>内容+"+data+"</body></html>";
-                ws.write(htmlTel);
-                ws.end();
-                console.log("产生....");
-            });
-        }else{
-            console.log("2222");
-            var ws=fs.createWriteStream(staticHTMLPath+id+".html");
-            htmlTel="<html><head><title>静态文件</title></head><body>内容+"+data+"</body></html>";
-            ws.write(htmlTel);
-            ws.end();
-            console.log("产生....");
+        var ws=fs.createWriteStream(staticHTMLPath+id+".html");
+        htmlTel="<html><head><title>静态文件</title></head><body>内容+"+data+"</body></html>";
+        ws.write(htmlTel);
+        ws.end();
+        console.log("产生....");
 
-        }
     })
+
+
 }
 
 exports.reloadStaticHTML=reloadStaticHTML;
-// 重新加载静态资源
+
 function  reloadStaticHTML(id){
-    console.log("重新生成"+id+".html");
+ console.log("重新生成"+id+".html");
+
 }
