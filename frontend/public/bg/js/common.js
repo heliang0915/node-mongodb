@@ -37,6 +37,8 @@ $(function(){
         }
     }
     common.init();
+
+    //$(".toolbar, .content, .footer").css("width", "96%");
 });
 
 

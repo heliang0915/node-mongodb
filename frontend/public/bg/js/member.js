@@ -1,8 +1,8 @@
-require(['util','page'],function(util,pagination){
+require(['util', 'page'], function (util, pagination) {
 
-   window.pageselectCallback=function(index,jq){
-       alert(index);
-   }
+    window.pageselectCallback = function (index, jq) {
+        alert(index);
+    }
 
     //lay.load();
     //layer.msg('玩命提示中');
@@ -29,14 +29,14 @@ require(['util','page'],function(util,pagination){
 
     //加载层
     //var index = layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
-   // layer.msg('加载中...', {icon: 16});
+    // layer.msg('加载中...', {icon: 16});
     //// 创建分页
 
     //
-    $(".toolbar, .content, .footer").css("width","98%");
 
-    pagination("pagination",{
-        num_entries:totalPage,
+
+    pagination("pagination", {
+        num_entries: totalPage,
         num_edge_entries: 1, //边缘页数
         num_display_entries: 4, //主体页数
         callback: pageselectCallback,
@@ -44,35 +44,33 @@ require(['util','page'],function(util,pagination){
         prev_text: "前一页",
         next_text: "后一页"
     });
-        //分页回调
-    function pageselectCallback(page_index, jq){
-        var url="/member/page";
-        util.ajax(url,function(data){
-           var  showFileds={"userName":"","tel":"","rank":"","email":"","sex":""}
-            var html="";
-            for(var i=0;i<data.length;i++){
-                var item=data[i];
-                 html+="<tr>";
-                html+='<td><input type="checkbox" name="check"></td>';
-                for(var file in showFileds){
-                    html+="<td>";
-                    html+=item[file];
-                    html+="</td>";
+    //分页回调
+    function pageselectCallback(page_index, jq) {
+        var url = "/member/page";
+        util.ajax(url, function (data) {
+            var showFileds = {"userName": "", "tel": "", "rank": "", "email": "", "sex": ""}
+            var html = "";
+            for (var i = 0; i < data.length; i++) {
+                var item = data[i];
+                html += "<tr>";
+                html += '<td><input type="checkbox" name="check"></td>';
+                for (var file in showFileds) {
+                    html += "<td>";
+                    html += item[file];
+                    html += "</td>";
                 }
-                html+='<td class="opt"><a href="###">&#xe609;</a></td>';
-             html+="</tr>";
+                html += '<td class="opt"><a href="###">&#xe609;</a></td>';
+                html += "</tr>";
             }
             $("#record").html(html)
-        },{
-            currentPage:page_index+1
+        }, {
+            currentPage: page_index + 1
         })
         //var new_content = $("#hiddenresult div.result:eq("+page_index+")").clone();
         //$("#Searchresult").empty().append(new_content); //装载对应分页的内容
         return false;
     }
 
-
-
-
+    $(".toolbar, .content, .footer").css("width", "96%");
 });
 
