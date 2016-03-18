@@ -42,6 +42,11 @@ $(function(){
     //$(".toolbar, .content, .footer").css("width", "96%");
 });
 
+define([],function(){
+
+});
+
+
 
 
 
