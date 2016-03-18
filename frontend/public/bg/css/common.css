@@ -47,6 +47,7 @@ dd {
 
 body {
     margin: 0;
+    overflow: hidden;
 }
 
 a {
@@ -411,9 +412,6 @@ padding-top: 10px;
 .pagination {
     float: right;
 }
-
-
-
 /*公共gird样式 结束*/
 
 
