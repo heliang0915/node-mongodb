@@ -7,85 +7,35 @@
 var app = require('../app');
 var debug = require('debug')('node-mongodb:server');
 var http = require('http');
-/**
- * Get port from environment and store in Express.
- */
-
-var port = normalizePort(process.env.PORT || '80');
-app.set('port', port);
-
-/**
- * Create HTTP server.
- */
-
-var server = http.createServer(app);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+var cluster = require('cluster');
+var cpuLen = require('os').cpus().length;
+var config = require('../backend/config');
 
 
+if (cluster.isMaster) {
+    var pid = process.pid;
+    console.log("主进程启动...");
+    console.log('主进程id:' + pid);
+    var count=0;
+    for (var i = 0; i < cpuLen; i++) {
+        cluster.fork();
+    }
 
-/**
- * Normalize a port into a number, string, or false.
- */
-
-function normalizePort(val) {
-  var port = parseInt(val, 10);
-
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
-
-  if (port >= 0) {
-    // port number
-    return port;
-  }
-
-  return false;
+    cluster.on('listening', function (worker, address) {
+        count++;
+        console.log('核心' + count + ' pid:' + worker.process.pid);
+    });
+    count=0;
+    cluster.on('exit', function (worker, code, signal) {
+        count++;
+        console.log('核心' + count + ' pid:' + worker.process.pid + ' 重启');
+        setTimeout(function () {
+            cluster.fork();
+        }, 2000);
+    });
+    //cluster.kill();
+} else {
+    app.set('port', process.env.PORT || 3000);
+    var server = app.listen(app.get('port'), config.host);
 }
 
-/**
- * Event listener for HTTP server "error" event.
- */
-
-function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
-
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-}
-
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
-}

@@ -6,20 +6,20 @@ var router = express.Router();
 var util=require("../util/util");
 var config=require("../config");
 var memberDao = require('../dao/memberDao');
-
+var cluster = require('cluster');
 //访问会员首页
 router.route('/').all(function(req, res){
-    util.createStaticHTML("1","","你好静态资源");
+    //util.createStaticHTML("1","","你好静态资源");
    res.render(config.member.index,{title:'测试商品首页',pageIndex:config.member.pageIndex,content:'测试商品首页内容'});
 })
 
 //进入会员列表页面
 router.route('/list').all(function(req,res){
+    console.log("list......");
+
     memberDao.count({},function(err,totalCount){
-        console.log(err);
-        console.log(totalCount);
         if(err){
-            res.send(err);
+            showErr(res,err);
         }else{
             res.render(config.member.list,{title: '会员list',pageSize:config.pageSize,totalCount:totalCount});
         }
@@ -29,7 +29,7 @@ router.route('/list').all(function(req,res){
 //ajax分页
 router.route('/page').all(function(req,res){
     var params=util.getParams(req);
-    console.log(params);
+    console.log(".......page");
     var currentPage=params.currentPage;
     var data={};
     if(params.data){
@@ -40,25 +40,41 @@ router.route('/page').all(function(req,res){
     });
 });
 
+//跳转新增页面
+router.route('/modifyPage').all(function (req, res) {
+    var params=util.getParams(req);
+    var uuid=params.uuid;
+
+    memberDao.findByUUID(uuid,function(err,member){
+        if(err){
+            showErr(res,err);
+        }else{
+            res.render(config.member.modifyPage,{
+                memberData:member
+            });
+        }
+    });
+});
+
 
 //新增数据
 router.route('/add').all(function (req, res) {
     var modelData =util.getParams(req);
-    //var index=11;
-    //modelData.userName="测试用户"+index;
-    //modelData.name="李四";
-    //modelData.sex=0;
-    //modelData.birthday="1987-09-13";
-    //modelData.email="4444@qq.com";
-    //modelData.tel="15811316527";
-    //modelData.rank="用户等级";
-    //modelData.address="地址";
-    //modelData.postCode="邮政编码";
-    //modelData.question="问题";
-    //modelData.answer="测试回答";
-    //modelData.password="1234456";
-    //modelData.order=index;
-    //console.log(modelData);
+    var index=1;
+    modelData.userName="测试用户"+index;
+    modelData.name="李"+index;
+    modelData.sex=0;
+    modelData.birthday="1987-09-13";
+    modelData.email="4444@qq.com";
+    modelData.tel="15811316527";
+    modelData.rank="用户等级";
+    modelData.address="地址";
+    modelData.postCode="邮政编码";
+    modelData.question="问题";
+    modelData.answer="测试回答";
+    modelData.password="1234456";
+    modelData.order=index;
+    console.log(modelData);
 
     modelData.password = util.md5(modelData.password);
     memberDao.add(modelData, function (err) {

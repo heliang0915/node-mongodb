@@ -1,9 +1,4 @@
-require(['util','page'],function(util,pagination){
-
-   window.pageselectCallback=function(index,jq){
-       alert(index);
-   }
-
+require(['business', 'util','lay'], function (business, util,layer) {
     //lay.load();
     //layer.msg('玩命提示中');
     //layer.open({
@@ -29,50 +24,60 @@ require(['util','page'],function(util,pagination){
 
     //加载层
     //var index = layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
-   // layer.msg('加载中...', {icon: 16});
-    //// 创建分页
+    // layer.msg('加载中...', {icon: 16});
 
-    //
-    $(".toolbar, .content, .footer").css("width","98%");
 
-    pagination("pagination",{
-        num_entries:totalPage,
-        num_edge_entries: 1, //边缘页数
-        num_display_entries: 4, //主体页数
-        callback: pageselectCallback,
-        items_per_page: 1, //每页显示1项
-        prev_text: "前一页",
-        next_text: "后一页"
-    });
+    var member = {};
+    //浅拷贝
+    member = util.extends(business, member);
+    //分页回调
+    var pageParams = {};
+    pageParams.url = "/member/page";
+    pageParams.data = {};
+
+    pageParams.callback = function (data) {
         //分页回调
-    function pageselectCallback(page_index, jq){
-        var url="/member/page";
-        util.ajax(url,function(data){
-           var  showFileds={"userName":"","tel":"","rank":"","email":"","sex":""}
-            var html="";
-            for(var i=0;i<data.length;i++){
-                var item=data[i];
-                 html+="<tr>";
-                html+='<td><input type="checkbox" name="check"></td>';
-                for(var file in showFileds){
-                    html+="<td>";
-                    html+=item[file];
-                    html+="</td>";
-                }
-                html+='<td class="opt"><a href="###">&#xe609;</a></td>';
-             html+="</tr>";
+        var showFileds = {"userName": "", "tel": "", "rank": "", "email": "", "sex": ""}
+        var html = "";
+        for (var i = 0; i < data.length; i++) {
+            var item = data[i];
+            html += "<tr>";
+            html += '<td><input type="checkbox" name="check"></td>';
+            for (var file in showFileds) {
+                html += "<td>";
+                html += item[file];
+                html += "</td>";
             }
-            $("#record").html(html)
-        },{
-            currentPage:page_index+1
-        })
-        //var new_content = $("#hiddenresult div.result:eq("+page_index+")").clone();
-        //$("#Searchresult").empty().append(new_content); //装载对应分页的内容
-        return false;
+            html += '<td class="opt"><a href="###">&#xe609;</a></td>';
+            html += "</tr>";
+        }
+        $("#record").html(html)
     }
 
 
+    var eventCallback = function () {
+        var _this=this;
+        $('#add').on('click', function () {
+
+            _this.openDialog({
+                type:2,
+                content:'/member/modifyPage',
+                okCallback:function(){
+                    alert("ok");
+                },
+                cancelCallback:function(){
+                    alert("取消");
+                }
+            });
 
 
+        })
+
+        $('#del').on('click', function () {
+            alert(self);
+        })
+    }
+    //初始化
+    member.init(pageParams, eventCallback);
 });
 

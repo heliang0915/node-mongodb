@@ -12,6 +12,7 @@ $(function(){
             var topHeight = $('.top').outerHeight() + 3;
             var contentHeight = winHeight - topHeight;
             var leftDom = $('.left-column');
+
             var left = leftDom.width();
             var right = $(window).width() - left + 12;
             leftDom.height(contentHeight);

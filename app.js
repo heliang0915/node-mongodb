@@ -5,24 +5,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var ejs = require('ejs');
-
-
-//var routes = require('./backend/routes/index');
-//var users = require('./backend/routes/users');
 var dispose = require('./backend/routes/dispose');
-
 var upload = require('./backend/common/upload');
 var download = require('./backend/common/download');
-
-
-
 //前端目录
 var frontendPath=__dirname+"\\frontend";
-
 var app = express();
 // view engine setup
 app.set('views',path.join(frontendPath, 'views'));
-//app.set('view engine', 'ejs');
 app.engine('html',ejs.__express);
 app.set('view engine', 'html');
 
@@ -42,18 +32,24 @@ app.use("/",dispose);
 app.use('/upload',upload);
 //下载处理
 app.use('/download',download);
-
-
+//日志
+require('./log4j/logger').use(app);
+var log4j=require('./log4j/logger');
+var errLogger = log4j.errLogger;
+var accessLogger = log4j.accessLogger;
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
-  next(err);
+  res.render('404', {
+    message: err.message,
+    error: err
+  });
+  //next(err);
 });
 
 // error handlers
-
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
@@ -75,5 +71,4 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 module.exports = app;
