@@ -9,8 +9,9 @@ var memberDao = require('../dao/memberDao');
 
 //访问会员首页
 router.route('/').all(function(req, res){
-    util.createStaticHTML("1","","你好静态资源");
-   res.render(config.member.index,{title:'测试商品首页',pageIndex:config.member.pageIndex,content:'测试商品首页内容'});
+    console.log("测试商品首页");
+    util.createStaticHTML("1","","你好静态资源5");
+   res.render("fg/static_html/1",{title:'测试商品首页',pageIndex:config.member.pageIndex,content:'测试商品首页内容'});
 })
 
 //进入会员列表页面

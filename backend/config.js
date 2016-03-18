@@ -15,7 +15,7 @@ exports.url = 'mongodb://192.168.1.106:27017/node';
 
 exports.pageSize=10;
 
-exports.staticHTMLPath="../frontend/fg/static_html/";
+exports.staticHTMLPath="../frontend/views/fg/static_html/";
 
 
 /*配置路由跳转页面和显示字段*/
