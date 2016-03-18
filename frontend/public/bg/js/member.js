@@ -61,7 +61,7 @@ require(['business', 'util','lay'], function (business, util,layer) {
 
             _this.openDialog({
                 type:2,
-                content:'/member/modifyPage',
+                content:'/member/modify',
                 okCallback:function(){
                     alert("ok");
                 },
@@ -69,8 +69,6 @@ require(['business', 'util','lay'], function (business, util,layer) {
                     alert("取消");
                 }
             });
-
-
         })
 
         $('#del').on('click', function () {

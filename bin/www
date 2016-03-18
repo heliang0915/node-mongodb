@@ -18,7 +18,6 @@ if (cluster.isMaster) {
     for (var i = 0; i < cpuLen; i++) {
         cluster.fork();
     }
-
     cluster.on('listening', function (worker, address) {
         count++;
         console.log('核心' + count + ' pid:' + worker.process.pid);
@@ -31,9 +30,8 @@ if (cluster.isMaster) {
             cluster.fork();
         }, 2000);
     });
-    //cluster.kill();
 } else {
-    app.set('port', process.env.PORT || 3000);
+    app.set('port', process.env.PORT || 8010);
     var server = app.listen(app.get('port'), config.host);
 }
 

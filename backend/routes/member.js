@@ -6,7 +6,7 @@ var router = express.Router();
 var util=require("../util/util");
 var config=require("../config");
 var memberDao = require('../dao/memberDao');
-var cluster = require('cluster');
+
 //访问会员首页
 router.route('/').all(function(req, res){
     //util.createStaticHTML("1","","你好静态资源");
@@ -41,7 +41,7 @@ router.route('/page').all(function(req,res){
 });
 
 //跳转新增页面
-router.route('/modifyPage').all(function (req, res) {
+router.route('/modify').all(function (req, res) {
     var params=util.getParams(req);
     var uuid=params.uuid;
 

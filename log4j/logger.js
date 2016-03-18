@@ -33,17 +33,14 @@ log4js.configure({
     levels:{
         err: 'ERROR',
         access: 'INFO',
-        console: 'debug'
+        console: 'DEBUG'
     }
 });
-
 var errLogger = log4js.getLogger('err');
 var accessLogger = log4js.getLogger('access');
 var consoleLog = log4js.getLogger('console');
-
 exports.errLogger = errLogger;
 exports.accessLogger = accessLogger;
-
 exports.use = function(app) {
     app.use(log4js.connectLogger(errLogger, {level: 'auto',format:':method :url'}));
     app.use(log4js.connectLogger(accessLogger, {level: 'auto',format:':method :url'}));

@@ -7,21 +7,15 @@
     margin: 0 auto;
 }
 
-
 @font-face {
     font-family: 'iconfont';
     src: url('//at.alicdn.com/t/font_1457858985_074804.eot'); /* IE9*/
-    src: url('//at.alicdn.com/t/font_1457858985_074804.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-    url('//at.alicdn.com/t/font_1457858985_074804.woff') format('woff'), /* chrome、firefox */
-    url('//at.alicdn.com/t/font_1457858985_074804.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-    url('//at.alicdn.com/t/font_1457858985_074804.svg#iconfont') format('svg'); /* iOS 4.1- */
+    src: url('//at.alicdn.com/t/font_1457858985_074804.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('//at.alicdn.com/t/font_1457858985_074804.woff') format('woff'), /* chrome、firefox */ url('//at.alicdn.com/t/font_1457858985_074804.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('//at.alicdn.com/t/font_1457858985_074804.svg#iconfont') format('svg'); /* iOS 4.1- */
 }
-
-
 
 * {
     font-size: 12px;
-    font-family: 微软雅黑,iconfont
+    font-family: 微软雅黑, iconfont
 }
 
 .logo {
@@ -125,9 +119,10 @@ li {
     padding-top: 15px;
 }
 
-.call > div{
+.call > div {
     position: relative;
 }
+
 .call dt {
     background-color: #e1e7f5;
     line-height: 35px;
@@ -135,26 +130,30 @@ li {
     border-bottom: 1px dashed #c4c9cf;
     cursor: pointer;
 }
+
 /*箭头向上*/
-.up > dd{
+.up > dd {
     display: none;
 }
-.up>dt:after{
+
+.up > dt:after {
     content: '\e608';
     position: absolute;
     right: 10px;
-    top:0;
+    top: 0;
 }
-.down > dd{
+
+.down > dd {
     display: block;
 }
 
-.down>dt:after{
+.down > dt:after {
     content: '\e607';
     position: absolute;
     right: 10px;
-    top:0;
+    top: 0;
 }
+
 .main {
     border-top: 1px dashed #ffffff;
 }
@@ -169,11 +168,11 @@ li {
 }
 
 /*.current {*/
-    /*background-color: #f8f8f8 !important;*/
+/*background-color: #f8f8f8 !important;*/
 /*}*/
 
 /*.current a {*/
-    /*color: #fd9363 !important;*/
+/*color: #fd9363 !important;*/
 /*}*/
 
 .right-content {
@@ -276,7 +275,6 @@ iframe {
     float: right;
 }
 
-
 /*公共gird样式 开始*/
 .grid-bg {
     background: #EBEBEB;
@@ -357,11 +355,10 @@ iframe {
     border-color: transparent #ccc #ccc transparent;
 }
 
-.grid .opt> a{
+.grid .opt > a {
     font-size: 20px;
     color: #000;
 }
-
 
 .page {
     position: absolute;
@@ -373,14 +370,15 @@ iframe {
 
 .total {
     float: right;
-    font-size:15px;
+    font-size: 15px;
     margin: 2px 30px 0 0;
 }
-.total em{
+
+.total em {
     color: #3399fe;
-    font-size:14px;
+    font-size: 14px;
     font-style: normal;
-    padding:0 4px;
+    padding: 0 4px;
 }
 
 .pagination {
@@ -392,27 +390,69 @@ iframe {
     position: relative;
 }
 
-
 .toolbar, .content, .footer {
     /*width: 98%;*/
     margin: 0 auto;
 }
 
 .toolbar {
-height: 56px;
-line-height: 56px;
-padding-top: 10px;
+    height: 56px;
+    line-height: 56px;
+    padding-top: 10px;
 }
-
 
 .footer {
     height: 41px;
     position: relative;
 }
+
 .pagination {
     float: right;
 }
+
 /*公共gird样式 结束*/
+
+/*公共表单样式开始*/
+.form {
+    width: 900px;
+    margin: 20px auto;
+}
+
+/*表单标题*/
+.form-title {
+    font-size:18px;
+    text-align: center;
+}
+.form-group{
+    width:50%;
+    height: 50px;
+    float: left;
+    /*text-align: right;*/
+}
+/*表单字段标题*/
+.form-tip {
+    padding:2px 6px;
+    width:80px;
+    white-space: nowrap;
+    display: inline-block;
+    text-align: right;
+}
+
+/*表单字段*/
+.form-filed input{
+    width:332px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding:10px 4px;
+    margin: 6px;
+    outline: none;
+}
+/*radio 类型*/
+.form-filed input[type='radio']{
+    width:20px;
+}
+
+/*公共表单样式结束*/
 
 
 
