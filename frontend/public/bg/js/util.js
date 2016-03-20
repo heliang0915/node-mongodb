@@ -11,24 +11,28 @@ define(['lay'], function (layer) {
             data: params,
             dateType: 'json',
             success: function (data) {
-                if(callback&&typeof callback =="function"){
+                if (callback && typeof callback == "function") {
                     callback(data);
                 }
                 layer.closeAll('loading');
             },
-            error: function () {
-                layer.msg("失败了");
+            error: function (e) {
+                console.log(e.responseText);
+                layer.msg("网络好像罢工了", {time: 12000, icon: 5});
+                layer.closeAll('loading');
             }
         })
     }
-
     //属性拷贝
-    util.extends=function(_old,_new){
-        for(var key in _old){
-            if(!Object.hasOwnProperty(key)) continue;
-            _old[key]=_new[key];
+    util.extends = function (_old, _new) {
+        for (var key in _old) {
+            if (!Object.hasOwnProperty(key)) continue;
+            _old[key] = _new[key];
         }
         return _old;
     }
+
+
+
     return util;
 });

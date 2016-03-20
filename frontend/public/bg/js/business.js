@@ -1,34 +1,18 @@
-//定义业务模块
+/**
+ * 公共业务模块 负责页面上的 增 删 改 查 操作
+ */
 define(["util", "page", "lay"], function (util, pagination, layer) {
     var business = {
-        init: function (pageParams, eventCallback, initCallBack) {
+        init: function (pageParams,initCallBack) {
             if (initCallBack && typeof initCallBack == "function") {
                 initCallBack();
             }
             this.initPage(pageParams.url, pageParams.data, pageParams.callback);
             this.initStyle();
-            this.initEvent(eventCallback);
+            this.initEvent();
         },
         initStyle: function () {
             $(".toolbar, .content, .footer").css("width", "98%");
-        },
-
-        initEvent: function (eventCallback) { //初始化事件
-            if (eventCallback && typeof eventCallback == "function") {
-                eventCallback.call(this);
-            }
-            //增删改查公共的处理
-            //$('#add').on('click', function () {
-            //    this.add();
-            //})
-            //
-            //$('#edit').on('click', function () {
-            //    this.edit();
-            //})
-
-            $('#del').on('click', function () {
-                this.del();
-            })
         },
         initPage: function (url, params, callback) {
             pagination("pagination", {
@@ -43,23 +27,29 @@ define(["util", "page", "lay"], function (util, pagination, layer) {
             //分页回调
             function pageselectCallback(page_index, jq) {
                 if (url) {
-                    params = params == undefined ? params : {};
+                    params = params == undefined ?{}: params ;
                     params.currentPage = page_index + 1;
                     util.ajax(url, callback, params)
                 }
                 return false;
             }
         },
-        //add: function (data) {
-        //    this.operation('/add', data);
-        //},
-        //edit: function (data) {
-        //    this.operation('/edit', data);
-        //},
-        del: function () {
+        initEvent:function(){
+            $("#selectAll").off('click').on('click',function(){
+                var check=$(this).is(":checked");
+                $("input[name='check']").prop("checked",check);
+            });
+        },
+        del: function (path,callback) {
+            var _this=this;
             var data = {};
             var str = "";
-            $('input[name="check"]:checked').each(function (i) {
+            var checks=$('input[name="check"]:checked');
+            if(checks.length==0){
+                layer.msg("请选择一条记录",{time:1500,icon:0});
+                return false;
+            }
+            checks.each(function (i) {
                 var uuid = $(this).val();
                 if (i == 0) {
                     str += uuid;
@@ -68,11 +58,20 @@ define(["util", "page", "lay"], function (util, pagination, layer) {
                 }
             });
             data.uuid = str;
-            this.operation('/del', data);
+            //询问框
+            layer.confirm('您确认删除吗？', {
+                btn: ['确认','取消'] //按钮
+            }, function(){
+                _this.operation('/'+path+'/del', data,callback);
+            });
         },
         operation: function (url, data, callback) {
             util.ajax(url, function (data) {
                 if (callback && typeof callback == "function") {
+                    var msg=data.msg;
+                    var state=data.state;
+                    var icon=(state=="ok"?6:5);
+                    layer.msg(msg, {time: 1200, icon:icon});
                     callback(data);
                 }
             }, data);

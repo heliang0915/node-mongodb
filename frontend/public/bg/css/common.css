@@ -341,6 +341,12 @@ iframe {
     background-color: #b9e563;
 }
 
+.gray {
+    background: #F1F1F1;
+    border: 1px solid #ccc;
+    color: #333;
+}
+
 .grid {
     width: 100%;
     text-align: center;
@@ -414,42 +420,76 @@ iframe {
 
 /*公共表单样式开始*/
 .form {
-    width: 900px;
-    margin: 20px auto;
+    width: 90%;
+    margin: 30px auto;
+    /*margin-left: -40px;*/
+    /*margin-left: -20px;*/
 }
 
 /*表单标题*/
 .form-title {
-    font-size:18px;
+    width: 90%;
+    font-size: 20px;
     text-align: center;
+
 }
-.form-group{
-    width:50%;
-    height: 50px;
+
+.form-group {
+    width: 45%;
+    height: 60px;
+    line-height: 60px;
     float: left;
+    position: relative;
     /*text-align: right;*/
 }
+
 /*表单字段标题*/
 .form-tip {
-    padding:2px 6px;
-    width:80px;
+    padding: 2px 6px;
+    width: 80px;
     white-space: nowrap;
     display: inline-block;
     text-align: right;
 }
 
+.form-filed {
+    display: inline-block;
+    margin: 10px 0;
+}
+
 /*表单字段*/
-.form-filed input{
-    width:332px;
+.form-filed input, select {
+    width: 330px;
     border: 1px solid #ccc;
     border-radius: 3px;
-    padding:10px 4px;
-    margin: 6px;
+    padding: 10px;
+    margin: 0 6px;
     outline: none;
 }
+
 /*radio 类型*/
-.form-filed input[type='radio']{
-    width:20px;
+.form-filed input[type='radio'] {
+    width: 20px;
+}
+
+.form-filed select {
+    width: 352px;
+}
+
+.form_err_tip{
+    position: absolute;
+    top: 40px;
+    left: 104px;
+    color: red;
+}
+.require{
+    color: red;
+    font-style: normal;
+    font-weight: bold;
+    font-size:14px;
+    position: relative;
+    top: 3px;
+    left: 3px;
 }
 
 /*公共表单样式结束*/

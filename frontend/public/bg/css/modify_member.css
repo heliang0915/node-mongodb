@@ -1,0 +1,14 @@
+body{
+    overflow: auto;
+}
+.btn-group {
+    text-align: center;
+    margin-top: 40px;
+    clear: both;
+    width: 96%;
+}
+
+.btn {
+    margin-right: 50px;
+    font-size: 14px;;
+}

@@ -14,9 +14,9 @@
             <span class="btn red" id="del">删除</span>
         </div>
         <div class="btn-search">
-            <input type="text" placeholder="请输入用户名,姓名,手机号">
-            <span class="btn primary">搜索</span>
-            <span class="btn primary">高级搜索</span>
+            <input type="text" id="searchInput" value="<%=searchText%>" placeholder="请输入用户名,姓名,手机号">
+            <span class="btn primary" id="search">搜索</span>
+            <span class="btn primary" id="advSearch">高级搜索</span>
         </div>
 
     </div>
@@ -44,6 +44,7 @@
         <% include ../common/page.html %>
     </div>
 </div>
+<input type="hidden" id="data" value="<%=data%>">
 </body>
 </html>
 <!--公共js 开始引入-->

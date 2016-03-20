@@ -17,6 +17,7 @@ require.config({
         "page": "/weight/pagination/page",
         "datepicker":"/weight/datepicker/datepicker",
         "util": "/bg/js/util",
+        "form":"/bg/js/form",
         "business": "/bg/js/business"
     },
     shim: {

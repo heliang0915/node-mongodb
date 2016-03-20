@@ -9,7 +9,7 @@ var dispose = require('./backend/routes/dispose');
 var upload = require('./backend/common/upload');
 var download = require('./backend/common/download');
 //前端目录
-var frontendPath=__dirname+"\\frontend";
+var frontendPath=__dirname+"/frontend";
 var app = express();
 // view engine setup
 app.set('views',path.join(frontendPath, 'views'));

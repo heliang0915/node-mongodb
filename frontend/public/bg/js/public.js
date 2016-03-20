@@ -14,7 +14,7 @@ $(function(){
             var leftDom = $('.left-column');
 
             var left = leftDom.width();
-            var right = $(window).width() - left + 12;
+            var right = $(window).width() - left ;
             leftDom.height(contentHeight);
             $('iframe').width(right);
             $('iframe').height(contentHeight);
@@ -28,21 +28,16 @@ $(function(){
             this.initAcc();
         },
         initAcc:function(){ //设置手风琴事件
-            $(".call").children("div").on('click',function(){
-                var className=$(this).attr('class');
+            $(".call").children("div").children("dt").on('click',function(){
+                var className=$(this).parent().attr('class');
                 var otherClassName="down";
                 className=(className=="down"?"up":"down");
                 otherClassName=(otherClassName=="down"?"up":"down");
-                $(this).attr('class',className).parent().siblings().children("div").attr('class',otherClassName)
+                $(this).parent().attr('class',className).parent().siblings().children("div").attr('class',otherClassName)
             })
         }
     }
     common.init();
-
-    //$(".toolbar, .content, .footer").css("width", "96%");
-});
-
-define([],function(){
 
 });
 

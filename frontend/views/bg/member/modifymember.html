@@ -4,67 +4,108 @@
     <meta charset="UTF-8">
     <title>会员操作</title>
     <% include ../common/commonCss.html %>
+    <link type="text/css" rel="stylesheet" href="/bg/css/modify_member.css">
 </head>
 <body>
-<form action="" class="form">
-    <h1 class="form-title">表单</h1>
-    <div class="form-group">
-        <label class="form-tip" for="userName" >用户名</label>
-        <span class="form-filed">
-            <input type="text"  autocomplete="off" name="userName" placeholder="请输入用户名...">
-        </span>
 
+
+<!--sex: Number, //0女 1男-->
+<!--birthday: String, // 生日-->
+<!--email: String,-->
+<!--tel: String,-->
+<!--rank: String, //会员等级-->
+<!--address: String,//地址-->
+<!--postCode: String, //邮编-->
+<!--question: String, //安全问题-->
+<!--answer: String,  //回答-->
+<!--order:Number-->
+
+<form action="/member/save" class="form" method="post">
+    <h1 class="form-title">会员添加</h1>
+    <div class="form-group">
+        <label class="form-tip">用户名</label>
+        <span class="form-filed">
+            <input type="text" required="true" value="<%=member.userName%>" regText="" filedText="用户名" id="userName"  autocomplete="off" name="userName" placeholder="请输入用户名...">
+        </span>
     </div>
     <div class="form-group">
-        <label for="password"  class="form-tip" >密码</label>
+        <label class="form-tip" >密码</label>
           <span class="form-filed">
-            <input type="text" name="password"  class="form-filed" autocomplete="off" placeholder="请输入用户名...">
+            <input type="password" name="password" value="<%=member.password%>"  required="true" regText="" filedText="密码"   id="password"   class="form-filed" autocomplete="off" placeholder="请输入密码...">
           </span>
     </div>
     <div class="form-group">
-        <label for="name"  class="form-tip" >真实姓名</label>
+        <label class="form-tip" >真实姓名</label>
         <span class="form-filed">
-            <input type="text" name="name"  class="form-filed" autocomplete="off" placeholder="请输入真实姓名...">
+            <input type="text" name="name" value="<%=member.name%>" class="form-filed" autocomplete="off" placeholder="请输入真实姓名...">
         </span>
     </div>
     <div class="form-group">
-         <label for="sex"  class="form-tip" >性别</label>
+         <label class="form-tip" >性别</label>
         <span class="form-filed">
-            <input type="radio" name="sex" checked="checked" value="0">女
-            <input type="radio" name="sex" value="1">男
+
+            <input type="radio" name="sex" checked="checked" id="woman" value="0"><label for="woman">女</label>
+            <input type="radio" name="sex" <%=member.sex==1?"checked":""%> value="1" id="man"><label for="man">男</label>
         </span>
     </div>
     <div class="form-group">
         <label for="birthday"   class="form-tip">出生日期</label>
         <span class="form-filed">
-            <input type="text" name="birthday" class="laydate-icon" id="birthday"  readonly autocomplete="off" placeholder="请输入出生日期...">
+            <input type="text" name="birthday" class="laydate-icon" value="<%=member.birthday%>" id="birthday"  readonly autocomplete="off" placeholder="请输入出生日期...">
         </span>
     </div>
-
     <div class="form-group">
-        <label for="birthday"   class="form-tip">出生日期</label>
-        <span class="form-filed">
-            <input type="text" name="birthday" class="laydate-icon" id="birthday"  readonly autocomplete="off" placeholder="请输入出生日期...">
-        </span>
+    <label  class="form-tip" >Email</label>
+         <span class="form-filed">
+            <input type="text" name="email"  class="form-filed" autocomplete="off" value="<%=member.email%>"  placeholder="请输入Email...">
+         </span>
     </div>
-
-    <!--<div class="group">-->
-    <!--<label for="email"  class="form-tip" >Email</label>-->
-    <!--<input type="text" name="email"  class="form-filed" autocomplete="off" placeholder="请输入Email...">-->
-    <!--</div>-->
-    <!--modelData.userName="测试用户"+index;-->
-    <!--modelData.name="李"+index;-->
-    <!--modelData.sex=0;-->
-    <!--modelData.birthday="1987-09-13";-->
-    <!--modelData.email="4444@qq.com";-->
-    <!--modelData.tel="15811316527";-->
-    <!--modelData.rank="用户等级";-->
-    <!--modelData.address="地址";-->
-    <!--modelData.postCode="邮政编码";-->
-    <!--modelData.question="问题";-->
-    <!--modelData.answer="测试回答";-->
-    <!--modelData.password="1234456";-->
-    <!--modelData.order=index;-->
+    <div class="form-group">
+    <label   class="form-tip" >移动电话</label>
+         <span class="form-filed">
+            <input type="text" name="tel"  class="form-filed" autocomplete="off" value="<%=member.tel%>"   placeholder="请输入移动电话...">
+         </span>
+    </div>
+    <div class="form-group">
+        <label   class="form-tip" >会员等级</label>
+         <span class="form-filed">
+             <select name="rank" required="true"  id="member_rank">
+                 <option value="0">普通会员</option>
+                 <option value="1">普通会员</option>
+                 <option value="2">普通会员</option>
+             </select>
+         </span>
+    </div>
+    <div class="form-group">
+        <label   class="form-tip" >邮编</label>
+         <span class="form-filed">
+             <input type="text" name="postCode" value="<%=member.postCode%>"  class="form-filed" autocomplete="off" placeholder="请输入邮编...">
+         </span>
+    </div>
+    <div class="form-group">
+        <label   class="form-tip" >地址</label>
+         <span class="form-filed">
+             <input type="text" name="address" value="<%=member.address%>"   class="form-filed" autocomplete="off" placeholder="请输入地址...">
+         </span>
+    </div>
+    <div class="form-group">
+        <label   class="form-tip" >安全问题</label>
+         <span class="form-filed">
+             <input type="text" name="question"  value="<%=member.question%>" class="form-filed" autocomplete="off" placeholder="请输入安全问题...">
+         </span>
+    </div>
+    <div class="form-group">
+        <label   class="form-tip" >回答</label>
+         <span class="form-filed">
+             <input type="text" name="answer" value="<%=member.answer%>"  class="form-filed" autocomplete="off" placeholder="请输入回答...">
+         </span>
+    </div>
+    <div class="btn-group">
+        <span class="btn primary" id="save">保存</span>
+        <span class="btn gray"  id="back">返回</span>
+    </div>
+    <input type="hidden" id="uuid"  name="uuid" value="<%=member.uuid%>">
+    <input type="hidden" id="order" name="order"  value="<%=member.order%>">
 </form>
 </body>
 </html>

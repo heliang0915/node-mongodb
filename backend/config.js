@@ -40,15 +40,23 @@ exports.order={
 }
 //会员
 exports.member={
+    module:"member",//schema模块名称
     index:"bg/member/member",
     list:'bg/member/memberlist',
     modifyPage:'bg/member/modifymember',
-
-    modify:"",
     pageIndex:3
-    //,
-    //showFileds:{"userName":"","tel":"","rank":"","email":"","sex":""} //页面显示的字段
 }
+//会员等级
+exports.memberRank={
+    module:"memberRank", //schema模块名称
+    index:"bg/member/memberrank",
+    list:'bg/member/memberranklist',
+    modifyPage:'bg/member/modifymemberrank',
+    pageIndex:3
+}
+
+
+
 //设置
 exports.setting={
     index:"bg/setting/setting",

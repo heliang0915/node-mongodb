@@ -24,8 +24,7 @@ var order=require('./order');
 //会员
 var member=require('./member');
 ////会员等级
-//var memberRank=require('./memberRank');
-
+var memberrank=require('./memberrank');
 /*设置模块*/
 var setting=require('./setting');
 
@@ -49,6 +48,7 @@ router.use('/product',product);
 //router.use('/procuctTag',procuctTag);
 router.use('/order',order);
 router.use('/member',member);
+router.use('/memberrank',memberrank);
 router.use('/setting',setting);
 
 //router.use('/menu',menu);

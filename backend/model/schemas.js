@@ -29,5 +29,5 @@ var memberRank = new Schema({
     percent: Number,// 优惠百分比
     defaultRank: Boolean //默认等级
 });
-exports.member = db.model('memberRank', memberRank); //  与memberRank集合关联
 exports.member = db.model('member', member); //  与member集合关联
+exports.memberRank = db.model('memberRank', memberRank); //  与memberRank集合关联

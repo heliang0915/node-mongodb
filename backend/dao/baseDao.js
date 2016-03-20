@@ -1,21 +1,23 @@
 //配置数据库链接
 var mongoose = require('mongoose');
-var util = require('util');
+//var util = require('util');
 var uuid = require('node-uuid');
 var modelPath = "../model/";
 //全局配置对象
 var config = require('../config');
+var log4j = require('../../log4j/logger');
+var errLogger = log4j.errLogger;
+//var accessLogger = log4j.accessLogger;
 
 //获取users的schema
 var modelName;
-var ModelSchema;
-var model;
+var ModelSchema={};
+var model=require(modelPath + "schemas");
 
 exports.setModelName = function (modelNa) {
     modelName = modelNa;
-    model = require(modelPath +"schemas");
-    ModelSchema = mongoose.model(modelName);
-
+    //model = require(modelPath + "schemas");
+    ModelSchema[modelName] = mongoose.model(modelName);
 }
 /*生成uuid*/
 function getUUID() {
@@ -26,26 +28,61 @@ function getUUID() {
     return tempUUID;
 }
 
+//返回最大的max
+var getMaxOrder = exports.getMaxOrder = function (callback) {
+    callback = callback == undefined ? function () {
+    } : callback;
+    model[modelName].find({}, function (err, doc) {
+        if (err) {
+            callback(err);
+            errLogger.error(err);
+        } else {
+            callback(null, doc[0].order);
+        }
+    }).sort({order: -1});
+}
+
+//根据条件查询数量
+var count = exports.count = function (data, callback) {
+    data = data == undefined ? {} : data;
+    callback = callback == undefined ? function () {
+    } : callback;
+    console.log(modelName);
+    model[modelName].count(data, function (err, len) {
+        if (err) {
+            callback(err);
+            errLogger.error(err);
+        } else {
+            callback(null, len);
+        }
+    })
+}
 
 /*新增*/
 exports.add = function (modelData, callback) {
     /*获取uuid*/
     var tempUUID = getUUID();
-    var newModelSchema = new ModelSchema();
-    //自动插入uuid
-    newModelSchema.uuid = tempUUID;
-    for (fileName in modelData) {
-        newModelSchema[fileName] = modelData[fileName];
-    }
-    newModelSchema.save(function (err) {
-        if (err) {
-            callback(err);
-            util.log("新增出现错误：" + err);
-        } else {
-            callback(null);
-            util.log("插入成功");
+    var newModelSchema = new  ModelSchema[modelName]();
+    getMaxOrder(function (err, order) {
+        //console.log(order);
+        for (var fileName in modelData) {
+            newModelSchema[fileName] = modelData[fileName];
         }
-    });
+        //自动插入uuid
+        newModelSchema.order = parseInt(order) + 1;
+        newModelSchema.uuid = tempUUID;
+        //console.log("newModelSchema>>"+JSON.stringify(newModelSchema));
+        newModelSchema.save(function (err) {
+            if (err) {
+                callback(err);
+                console.log("新增出现错误：" + err);
+                errLogger.error(err);
+            } else {
+                callback(null);
+                console.log("插入成功");
+            }
+        });
+    })
 }
 
 /*修改*/
@@ -55,7 +92,8 @@ exports.edit = function (uuid, editObj, callback) {
     findByUUID(uuid, function (err, user) {
         if (err) {
             callback(err);
-            util.log("修改出现错误：" + err);
+            console.log("修改出现错误：" + err);
+            errLogger.error(err);
         } else {
             //循环
             for (var key in editObj) {
@@ -63,14 +101,14 @@ exports.edit = function (uuid, editObj, callback) {
                     user[key] = editObj[key];
                 }
             }
-            console.log(editObj);
             user.save(function (err) {
                 if (err) {
                     callback(err);
-                    util.log("修改出现错误：" + err);
+                    console.log("修改出现错误：" + err);
+                    errLogger.error(err);
                 } else {
                     callback(null);
-                    util.log("修改成功");
+                    console.log("修改成功");
                 }
             });
         }
@@ -79,27 +117,27 @@ exports.edit = function (uuid, editObj, callback) {
 
 /*删除*/
 exports.del = function (uuids, callback) {
-    callback = callback == undefined ? function () {} : callback;
-    console.log("uuids>>>"+uuids)
-    var uuidAry=[];
-    if(uuids.indexOf(',')>-1){
-        uuidAry=uuids.split(",");
-    }else{
+    callback = callback == undefined ? function () {
+    } : callback;
+    var uuidAry = [];
+    if (uuids.indexOf(',') > -1) {
+        uuidAry = uuids.split(",");
+    } else {
         uuidAry.push(uuids);
     }
-    console.log("uuidAry>>>"+uuidAry);
-
-    uuidAry.forEach(function(uid){
-        console.log("uid>>>>"+uid);
+    uuidAry.forEach(function (uid) {
+        //console.log("uid>>>>"+uid);
         findByUUID(uid, function (err, modelSchema) {
             if (err) {
                 callback(err);
-                util.log("删除出现错误：" + err);
+                console.log("删除出现错误：" + err);
+                errLogger.error(err);
+
             } else {
                 //删除
                 modelSchema.remove();
                 callback(null);
-                util.log("删除成功");
+                console.log("删除成功");
             }
         })
     })
@@ -107,46 +145,43 @@ exports.del = function (uuids, callback) {
 
 /*查询*/
 exports.findAll = function (callback) {
-    findByData({},callback);
+    findByData({}, callback);
 }
 
 
-exports.find=function(data,callback){
-    callback = callback == undefined ? function () {} : callback;
+exports.find = function (data, callback) {
+    callback = callback == undefined ? function () {
+    } : callback;
     model[modelName].find(data, function (err, models) {
         if (err) {
-            callback(err)
+            callback(err);
+            errLogger.error(err);
         } else {
             callback(null, models);
         }
     });
 }
 
-//根据条件查询数量
-exports.count=function(data,callback){
-    count(data,callback);
-}
-
 //分页
-exports.page=function(currentPage,data,callback,sortFile){
+exports.page = function (currentPage, data, callback, sortFile) {
     //查询总数
-    count(data,function(err, total) {
+    count(data, function (err, total) {
         if (err) {
-            callback(err)
+            callback(err);
+            errLogger.error(err);
         } else {
-            var pageSize=config.pageSize;
-            var start=(currentPage-1)*pageSize;
-            console.log("start>>>>"+start);
-            var desc={};
-            desc["order"]=-1;
-            if(sortFile){
-                desc=sortFile;
+            var pageSize = config.pageSize;
+            var start = (currentPage - 1) * pageSize;
+            //console.log("start>>>>"+start);
+            var desc = {};
+            desc["order"] = -1;
+            if (sortFile) {
+                desc = sortFile;
             }
-            console.log("--------------------------------------"+sortFile);
             model[modelName].find(data, function (err, models) {
-                console.log(models);
                 if (err) {
-                    callback(err)
+                    callback(err);
+                    errLogger.error(err);
                 } else {
                     callback(null, models);
                 }
@@ -154,19 +189,16 @@ exports.page=function(currentPage,data,callback,sortFile){
         }
     });
 }
-exports.count=function(data,callback){
-        count(data,callback);
-}
-
-
 
 //根据条件查询数据
-var findByData=function(data,callback){
-    callback = callback == undefined ? function () {} : callback;
+var findByData = function (data, callback) {
+    callback = callback == undefined ? function () {
+    } : callback;
     //console.log(  model[modelName].find);
     model[modelName].find(data, function (err, models) {
         if (err) {
-            callback(err)
+            callback(err);
+            errLogger.error(err);
         } else {
             callback(null, models);
         }
@@ -174,21 +206,6 @@ var findByData=function(data,callback){
 
 }
 
-
-//根据条件查询数量
-var count=function(data,callback){
-    data=data==undefined?{}:data;
-    callback = callback == undefined ? function () {} : callback;
-    model[modelName].count(data,function(err,len){
-        if (err) {
-            callback(err)
-        } else {
-            callback(null, len);
-            console.log("count>>>>"+len);
-        }
-    })
-
-}
 
 /*根据uuid查询单条数据*/
 var findByUUID = exports.findByUUID = function (uuid, callback) {
@@ -197,10 +214,11 @@ var findByUUID = exports.findByUUID = function (uuid, callback) {
     model[modelName].findOne({'uuid': uuid}, function (err, model) {
         if (!err) {
             callback(null, model);
-            util.log("根据uuid查询单条数据成功");
+            console.log("根据uuid查询单条数据成功");
         } else {
             callback(err, null);
-            util.log("查询出现错误：" + err);
+            console.log("查询出现错误：" + err);
+            errLogger.error(err);
         }
 
     });
