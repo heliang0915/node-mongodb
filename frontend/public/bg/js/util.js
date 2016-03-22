@@ -18,7 +18,7 @@ define(['lay'], function (layer) {
             },
             error: function (e) {
                 console.log(e.responseText);
-                layer.msg("网络好像罢工了", {time: 12000, icon: 5});
+                layer.msg("喔呦，程序好像出错了", {time: 12000, icon: 5});
                 layer.closeAll('loading');
             }
         })

@@ -7,19 +7,6 @@
     <link type="text/css" rel="stylesheet" href="/bg/css/modify_member.css">
 </head>
 <body>
-
-
-<!--sex: Number, //0女 1男-->
-<!--birthday: String, // 生日-->
-<!--email: String,-->
-<!--tel: String,-->
-<!--rank: String, //会员等级-->
-<!--address: String,//地址-->
-<!--postCode: String, //邮编-->
-<!--question: String, //安全问题-->
-<!--answer: String,  //回答-->
-<!--order:Number-->
-
 <form action="/member/save" class="form" method="post">
     <h1 class="form-title">会员添加</h1>
     <div class="form-group">
@@ -69,10 +56,11 @@
     <div class="form-group">
         <label   class="form-tip" >会员等级</label>
          <span class="form-filed">
-             <select name="rank" required="true"  id="member_rank">
-                 <option value="0">普通会员</option>
-                 <option value="1">普通会员</option>
-                 <option value="2">普通会员</option>
+             <select name="rank" required="true"   filedText="会员等级"  id="member_rank">
+                 <option value="">请选择...</option>
+                 <% memberRanks.forEach(function(memberRank){%>
+                 <option value="<%=memberRank.uuid%>"><%=memberRank.name%></option>
+                 <%})%>
              </select>
          </span>
     </div>

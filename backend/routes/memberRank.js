@@ -38,15 +38,85 @@ router.route('/list').all(function (req, res) {
 });
 
 
-//ajax分页d
+//ajax分页
 router.route('/page').all(function (req, res) {
-    var params = util.getParams(req,memberDao,config.member.module);
+    var params = util.getParams(req,memberRankDao,config.memberRank.module);
     console.log(".......page");
     var currentPage = params.currentPage;
     var searchData = util.getSearchData(params);
-    memberDao.page(currentPage, searchData, function (err, members) {
+    memberRankDao.page(currentPage, searchData, function (err, memberRanks) {
         var json = {};
-        json.data = members;
+        json.data = memberRanks;
+        res.send(json);
+    });
+});
+
+
+//跳转新增页面
+router.route('/modify').all(function (req, res) {
+    var params = util.getParams(req,memberRankDao,config.memberRank.module);
+    var uuid = params.uuid;
+    if (uuid) {
+        memberRankDao.findByUUID(uuid, function (err, memberRank) {
+            if (err) {
+                util.showErr(res, err);
+            } else {
+                res.render(config.memberRank.modifyPage, {
+                    memberRank: memberRank
+                });
+            }
+        });
+    } else {
+        res.render(config.memberRank.modifyPage, {
+            memberRank: {}
+        });
+    }
+});
+//保存数据
+router.route('/save').all(function (req, res) {
+    var modelData = util.getParams(req,memberRankDao,config.memberRank.module);
+    var str = "";
+    var state = "ok";
+    var json = {};
+    if (modelData.uuid) {
+        memberRankDao.edit(modelData.uuid, modelData, function (err) {
+            if (err) {
+                str = err;
+                state = "err";
+            } else {
+                str = "会员等级修改成功！";
+            }
+            json = message.parseJSON(state, str);
+            res.send(json);
+        });
+    } else {
+        memberRankDao.add(modelData, function (err) {
+            if (err) {
+                str = err;
+                state = "err";
+            } else {
+                str = "会员等级添加成功！";
+            }
+            json = message.parseJSON(state, str);
+            res.send(json);
+        });
+    }
+});
+//删除数据
+router.route('/del').all(function (req, res) {
+    var modelData = util.getParams(req,memberRankDao,config.memberRank.module);
+    var str = "";
+    var state = "ok";
+    var json = {};
+    var uuids = modelData.uuid;
+    memberRankDao.del(uuids, function (err) {
+        if (err) {
+            str = err;
+            state = "err";
+        } else {
+            str = "会员等级删除成功！";
+        }
+        json = message.parseJSON(state, str);
         res.send(json);
     });
 });

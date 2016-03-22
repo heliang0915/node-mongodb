@@ -27,7 +27,8 @@ var memberRank = new Schema({
     name: String,//等级名称
     score: Number,//等级积分
     percent: Number,// 优惠百分比
-    defaultRank: Boolean //默认等级
+    defaultRank: Boolean,//默认等级
+    order:Number
 });
 exports.member = db.model('member', member); //  与member集合关联
 exports.memberRank = db.model('memberRank', memberRank); //  与memberRank集合关联

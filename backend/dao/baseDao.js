@@ -37,7 +37,11 @@ var getMaxOrder = exports.getMaxOrder = function (callback) {
             callback(err);
             errLogger.error(err);
         } else {
-            callback(null, doc[0].order);
+            var order=1;
+            if(doc[0]){
+                order= doc[0].order;
+            }
+            callback(null, order);
         }
     }).sort({order: -1});
 }
