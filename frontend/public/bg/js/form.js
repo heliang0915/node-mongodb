@@ -36,7 +36,7 @@ define(["util","lay"],function(util,layer){
                                 setTimeout(function() {
                                     //询问框
                                     layer.confirm('是否继续添加？', {
-                                        btn: ['确认', '取消'] //按钮
+                                        btn: ['确认', '返回列表'] //按钮
                                     }, function () {
                                         window.location.href = window.location.href;
                                     },function(){
@@ -70,6 +70,7 @@ define(["util","lay"],function(util,layer){
         validate: function () {
             var flag = true;
             selectorDom.each(function () {
+                var temp=true;
                 var dom = $(this);
                 var tipId = dom.attr("id") + "_tip";
                 var val = dom.val();
@@ -77,22 +78,23 @@ define(["util","lay"],function(util,layer){
                 var regText = dom.attr("regText");
                 if (val == "") {
                     $("#" + tipId).html(filedText + "不允许为空");
-                    flag = false;
+                    //flag = false;
+                    flag= temp=false;
                 } else {
                     if (regText) {
                         if (regText != "") {
                             if (!eval(regText).test(val)) {
                                 $("#" + tipId).html(filedText + "格式错误，请重新输入");
-                                flag = false;
+                                flag =temp= false;
                             } else {
                                 $("#" + tipId).html("");
-                                flag = true;
+                                temp=true;
+                                flag=temp&&flag;
                             }
-
                         }
                     }
                 }
-                if(flag){
+                if(temp){
                     $("#" + tipId).html("");
                 }
             })

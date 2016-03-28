@@ -1,0 +1,126 @@
+/**
+ * 商品分类 路由
+ */
+var express = require('express');
+var router = express.Router();
+var util=require("../../util/util");
+var productCategoryDao = require('../../dao/product/productCategoryDao');
+var message = require("../../util/message");
+var config=require("../../config");
+
+//访问商品分类首页
+router.route('/').all(function (req, res) {
+
+    var params=util.getParams(req);
+    console.log(params);
+    res.render(config.product.index, {title:config.productCategory.title,action:config.productCategory.module.toLocaleLowerCase(),  pageIndex:config.product.pageIndex,active:'active'});
+})
+
+
+//访问列表
+router.route('/list').all(function (req, res) {
+    var totalCount=10;
+    console.log("商品分类-list......");
+    var params = util.getParams(req, productCategoryDao, config.productCategory.module);
+    var searchText = "";
+    var ary = [];
+    var searchData = util.getSearchData(params);
+    productCategoryDao.count(searchData, function (err, totalCount) {
+        if (err) {
+            util.showErr(res, err);
+        } else {
+            res.render(config.productCategory.list, {
+                title: '商品分类',
+                data: JSON.stringify(params),
+                //searchText: searchText,
+                pageSize: config.pageSize,
+                totalCount: totalCount
+            });
+        }
+    });
+});
+
+//ajax分页
+router.route('/page').all(function (req, res) {
+    var params = util.getParams(req,productCategoryDao,config.productCategory.module);
+    console.log(".......page");
+    var currentPage = params.currentPage;
+    var searchData = util.getSearchData(params);
+    productCategoryDao.page(currentPage, searchData, function (err, productTags) {
+        var json = {};
+        json.data = productTags;
+        res.send(json);
+    },{order:1});
+});
+
+//跳转新增页面
+router.route('/modify').all(function (req, res) {
+    var params = util.getParams(req,productCategoryDao,config.productCategory.module);
+    var uuid = params.uuid;
+    if (uuid) {
+        productCategoryDao.findByUUID(uuid, function (err, productCategory) {
+            if (err) {
+                util.showErr(res, err);
+            } else {
+                res.render(config.productCategory.modifyPage, {
+                    productCategory: productCategory
+                });
+            }
+        });
+    } else {
+        res.render(config.productCategory.modifyPage, {
+            productCategory: {}
+        });
+    }
+});
+//保存数据
+router.route('/save').all(function (req, res) {
+    var modelData = util.getParams(req,productCategoryDao,config.productCategory.module);
+    var str = "";
+    var state = "ok";
+    var json = {};
+    if (modelData.uuid) {
+        productCategoryDao.edit(modelData.uuid, modelData, function (err) {
+            if (err) {
+                str = err;
+                state = "err";
+            } else {
+                str = "商品分类修改成功！";
+            }
+            json = message.parseJSON(state, str);
+            res.send(json);
+        });
+    } else {
+        console.log(modelData);
+        productCategoryDao.add(modelData, function (err) {
+            if (err) {
+                str = err;
+                state = "err";
+            } else {
+                str = "商品分类添加成功！";
+            }
+            json = message.parseJSON(state, str);
+            res.send(json);
+        });
+    }
+});
+//删除数据
+router.route('/del').all(function (req, res) {
+    var modelData = util.getParams(req,productCategoryDao,config.productCategory.module);
+    var str = "";
+    var state = "ok";
+    var json = {};
+    var uuids = modelData.uuid;
+    productCategoryDao.del(uuids, function (err) {
+        if (err) {
+            str = err;
+            state = "err";
+        } else {
+            str = "商品分类删除成功！";
+        }
+        json = message.parseJSON(state, str);
+        res.send(json);
+    });
+});
+
+module.exports = router;

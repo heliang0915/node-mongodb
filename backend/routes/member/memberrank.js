@@ -3,20 +3,21 @@
  */
 var express = require('express');
 var router = express.Router();
-var util = require("../util/util");
-var message = require("../util/message");
-var config = require("../config");
-var memberRankDao = require('../dao/memberRankDao');
+var util = require("../../util/util");
+var message = require("../../util/message");
+var config = require("../../config");
+var memberRankDao = require('../../dao/member/memberRankDao');
 
 //访问会员等级首页
 router.route('/').all(function (req, res) {
     var params = util.getParams(req,memberRankDao,config.memberRank.module);
-    res.render(config.memberRank.index, {title: '会员首页', pageIndex: config.member.pageIndex, content: '会员内容'});
+    //res.render(config.memberRank.index, {title: '会员首页', pageIndex: config.member.pageIndex, content: '会员内容'});
+    res.render(config.member.index, {title:config.memberRank.title,action:config.memberRank.module.toLocaleLowerCase(), pageIndex:config.member.pageIndex,active:'active'});
 })
 
 //进入会员列表页面
 router.route('/list').all(function (req, res) {
-    console.log("list......");
+    console.log("会员等级list......");
     var params = util.getParams(req,memberRankDao,config.memberRank.module);
     var searchText = "";
     var ary = [];

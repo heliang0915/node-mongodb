@@ -1,5 +1,6 @@
+/*单列样式*/
 body{
-    overflow: auto;
+    /*overflow: auto;*/
 }
 .btn-group {
     text-align: center;
@@ -22,8 +23,20 @@ body{
     /*position: relative;*/
     /* text-align: right; */
 }
-.form-filed input, select {
+.form-filed input[type='text'],.form-filed input[type='file'],.form-filed select {
     width: 660px;
+}
+.radio{
+    position: relative;
+    left: -306px;
+}
+.file{
+    width: 680px !important;
+    /*position: relative;*/
+    /*left: -14px;*/
+}
+.select{
+    width: 684px !important;
 }
 .form-default{
  margin-right: 608px;

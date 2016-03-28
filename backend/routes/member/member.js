@@ -3,11 +3,11 @@
  */
 var express = require('express');
 var router = express.Router();
-var util = require("../util/util");
-var message = require("../util/message");
-var config = require("../config");
-var memberDao = require('../dao/memberDao');
-var memberRankDao = require('../dao/memberRankDao');
+var util = require("../../util/util");
+var message = require("../../util/message");
+var config = require("../../config");
+var memberDao = require('../../dao/member/memberDao');
+var memberRankDao = require('../../dao/member/memberRankDao');
 
 
 //访问会员首页
@@ -15,7 +15,7 @@ router.route('/').all(function (req, res) {
     console.log(">>>访问会员首页>>>");
     var params = util.getParams(req, memberDao, config.member.module);
     //util.createStaticHTML("1","","你好静态资源");
-    res.render(config.member.index, {title: '会员首页', pageIndex: config.member.pageIndex, content: '会员内容'});
+    res.render(config.member.index, {title:config.member.title,action:config.member.module.toLocaleLowerCase(), pageIndex:config.member.pageIndex,active:'active'});
 })
 
 //进入会员列表页面
@@ -29,7 +29,6 @@ router.route('/list').all(function (req, res) {
         if (err) {
             util.showErr(res, err);
         } else {
-            console.log(JSON.stringify(params));
             res.render(config.member.list, {
                 title: '会员list',
                 data: JSON.stringify(params),

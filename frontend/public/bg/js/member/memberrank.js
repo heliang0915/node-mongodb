@@ -1,38 +1,30 @@
-require(['business', 'util','lay'], function (business, util,layer) {
-    var member = {};
+require(['business', 'util','lay'], function (business, util, layer) {
+    var memberrank = {};
     //分页回调
     var pageParams = {};
-    pageParams.url = "/member/page?temp="+Math.random();
-    pageParams.data =JSON.parse($("#data").val());
+    pageParams.url = "/memberrank/page?temp="+Math.random();
+    pageParams.data ={};
     //JSON.stringify(data);
     //浅拷贝
-    member = util.extends(business, member);
+    memberrank = util.extends(business, memberrank);
     //事件回调
     var eventCallback = function () {
         var _this=this;
         //添加动作
         $('#add').on('click', function () {
-            window.location.href="/member/modify";
+            window.location.href="/memberrank/modify";
         })
         //修改动作
         $('a[name=modify]').on('click',function(){
             var uuid=$(this).attr('data');
-            window.location.href="/member/modify?uuid="+uuid;
+            window.location.href="/memberrank/modify?uuid="+uuid;
         })
         //删除动作
         $('#del').on('click', function () {
-            member.del("member",function(){
-                window.location.href="/member/list";
+            memberrank.del("memberrank",function(){
+                window.location.href="/memberrank/list";
             });
         })
-
-        //搜索按钮注册动作
-        $('#search').on('click', function () {
-            var key=$("#searchInput").val();
-            var keyStr="?userName="+key+"&name="+key+"&tel="+key;
-            window.location.href="/member/list"+keyStr;
-        });
-
         //重置复选框
         $("#selectAll").prop("checked",false);
         //设置复选框
@@ -49,7 +41,7 @@ require(['business', 'util','lay'], function (business, util,layer) {
     pageParams.callback = function (json) {
         var data=json.data;
         //分页回调
-        var showFileds = {"userName": "", "tel": "", "rank": "", "email": "", "sex": ""}
+        var showFileds = {"name": "", "score": "","percent":"","defaultRank": ""}
         var html = "";
         for (var i = 0; i < data.length; i++) {
             var item = data[i];
@@ -58,8 +50,8 @@ require(['business', 'util','lay'], function (business, util,layer) {
             for (var file in showFileds) {
                 var text="";
                 html += "<td>";
-                if(file=="sex"){
-                    text=item[file]==1?"男":"女";
+                if(file=="defaultRank"){
+                    text=item[file]==true?"是":"否";
                 }else{
                     text= item[file];
                 }
@@ -77,6 +69,6 @@ require(['business', 'util','lay'], function (business, util,layer) {
 
 
     //初始化
-    member.init(pageParams);
+    memberrank.init(pageParams);
 });
 

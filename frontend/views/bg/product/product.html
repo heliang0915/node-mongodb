@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>商品</title>
+    <title><%=title%></title>
     <% include ../common/commonCss.html %>
 </head>
 <body>
 <!--公共头部引入-->
 <% include ../common/header.html %>
+<!--会员管理-->
 <div class="content">
     <div class="left-column">
         <div class="service">
@@ -16,43 +17,33 @@
         <!--分类1-->
         <dl class="call">
             <div class="down">
-                <dt>服务中心</dt>
-                <dd><a href="#">租房服务</a></dd>
-                <dd><a href="#">售房服务</a></dd>
-                <dd><a href="#">客户服务</a></dd>
-                <dd><a href="#">纠纷服务</a></dd>
-                <dd><a href="#">法律服务</a></dd>
-                <dd><a href="#">民生服务</a></dd>
+                <dt>商品管理</dt>
+                <dd><a href="#">商品列表</a></dd>
+                <dd><a href="#">进货</a></dd>
+                <dd><a href="#">仓库维护</a></dd>
             </div>
         </dl>
-        <!--分类2-->
+        <!--商品设置-->
         <dl class="call">
             <div class="up">
-                <dt>服务中心</dt>
-                <dd><a href="#">租房服务</a></dd>
-                <dd><a href="#">售房服务</a></dd>
-                <dd><a href="#">客户服务</a></dd>
-                <dd><a href="#">纠纷服务</a></dd>
-                <dd><a href="#">法律服务</a></dd>
-                <dd><a href="#">民生服务</a></dd>
+                <dt>商品设置</dt>
+                <dd><a href="/productcategory">分类列表</a></dd>
+                <dd><a href="/productbrand">品牌列表</a></dd>
+                <dd><a href="#">类型列表</a></dd>
+                <dd><a href="#">规格列表</a></dd>
             </div>
         </dl>
-        <!--分类2-->
+        <!--标签管理-->
         <dl class="call">
             <div class="up">
-                <dt>服务中心</dt>
-                <dd><a href="#">租房服务</a></dd>
-                <dd><a href="#">售房服务</a></dd>
-                <dd><a href="#">客户服务</a></dd>
-                <dd><a href="#">纠纷服务</a></dd>
-                <dd><a href="#">法律服务</a></dd>
-                <dd><a href="#">民生服务</a></dd>
+                <dt>标签管理</dt>
+                <dd><a href="/producttag">标签列表</a></dd>
+                <dd><a href="#">标签商品设置</a></dd>
             </div>
         </dl>
-
     </div>
     <div class="meduo meduo2">
-        <iframe src="123"  frameborder="0"></iframe>
+        <iframe src="/<%=action%>/list"  frameborder="0"></iframe>
     </div>
 </div>
 </body>

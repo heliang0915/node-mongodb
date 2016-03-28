@@ -10,7 +10,12 @@ var home=require('./home');
 
 /*商品模块*/
 //商品
-var product=require('./product');
+var product=require('./product/product');
+var productTag=require('./product/productTag');
+var productCategory=require('./product/productCategory');
+var productBrand=require('./product/productBrand');
+
+
 ////商品分类
 //var productItem=require('./productItem');
 ////商品标签
@@ -18,15 +23,17 @@ var product=require('./product');
 
 /*订单模块*/
 //订单
-var order=require('./order');
+var order=require('./order/order');
 
 /*会员模块*/
 //会员
-var member=require('./member');
+var member=require('./member/member');
 ////会员等级
-var memberrank=require('./memberrank');
+var memberrank=require('./member/memberrank');
+
+
 /*设置模块*/
-var setting=require('./setting');
+var setting=require('./setting/setting');
 
 var config=require("../config");
 ////菜单
@@ -44,6 +51,10 @@ router.use('/',home);
 
 /*路由分类设置*/
 router.use('/product',product);
+router.use('/producttag',productTag);
+router.use('/productcategory',productCategory);
+router.use('/productbrand',productBrand);
+
 //router.use('/productItem',productItem);
 //router.use('/procuctTag',procuctTag);
 router.use('/order',order);

@@ -3,8 +3,8 @@
  */
 var express = require('express');
 var router = express.Router();
-var util=require("../util/util");
-var config=require("../config");
+var util=require("../../util/util");
+var config=require("../../config");
 
 //访问系统设置首页
 router.route('/').all(function (req, res) {

@@ -1,28 +1,28 @@
-require(['business', 'util','lay'], function (business, util,layer) {
-    var memberrank = {};
+require(['business', 'util','lay'], function (business, util, layer) {
+    var producttag = {};
     //分页回调
     var pageParams = {};
-    pageParams.url = "/memberrank/page?temp="+Math.random();
+    pageParams.url = "/producttag/page?temp="+Math.random();
     pageParams.data ={};
     //JSON.stringify(data);
     //浅拷贝
-    memberrank = util.extends(business, memberrank);
+    producttag = util.extends(business, producttag);
     //事件回调
     var eventCallback = function () {
         var _this=this;
         //添加动作
         $('#add').on('click', function () {
-            window.location.href="/memberrank/modify";
+            window.location.href="/producttag/modify";
         })
         //修改动作
         $('a[name=modify]').on('click',function(){
             var uuid=$(this).attr('data');
-            window.location.href="/memberrank/modify?uuid="+uuid;
+            window.location.href="/producttag/modify?uuid="+uuid;
         })
         //删除动作
         $('#del').on('click', function () {
-            memberrank.del("memberrank",function(){
-                window.location.href="/memberrank/list";
+            producttag.del("producttag",function(){
+                window.location.href="/producttag/list";
             });
         })
         //重置复选框
@@ -41,7 +41,7 @@ require(['business', 'util','lay'], function (business, util,layer) {
     pageParams.callback = function (json) {
         var data=json.data;
         //分页回调
-        var showFileds = {"name": "", "score": "","percent":"","defaultRank": ""}
+        var showFileds = {"uuid": "", "tagName": ""}
         var html = "";
         for (var i = 0; i < data.length; i++) {
             var item = data[i];
@@ -50,11 +50,7 @@ require(['business', 'util','lay'], function (business, util,layer) {
             for (var file in showFileds) {
                 var text="";
                 html += "<td>";
-                if(file=="defaultRank"){
-                    text=item[file]==true?"是":"否";
-                }else{
-                    text= item[file];
-                }
+                text= item[file];
                 html += text;
                 html += "</td>";
             }
@@ -65,10 +61,7 @@ require(['business', 'util','lay'], function (business, util,layer) {
         eventCallback.call(this);
     }
 
-    console.log(pageParams);
-
-
     //初始化
-    memberrank.init(pageParams);
+    producttag.init(pageParams);
 });
 

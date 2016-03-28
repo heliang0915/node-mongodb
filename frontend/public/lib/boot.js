@@ -12,11 +12,14 @@ require.config({
         "pagination": "/weight/pagination/jquery.pagination",
         "laydate": "/weight/datepicker/laydate",
 
-        //业务js
+        //组件js
         "lay": "/weight/layer/lay",
         "page": "/weight/pagination/page",
         "datepicker":"/weight/datepicker/datepicker",
+        "upload":"/weight/upload/upload",
         "util": "/bg/js/util",
+
+        //业务js
         "form":"/bg/js/form",
         "business": "/bg/js/business"
     },

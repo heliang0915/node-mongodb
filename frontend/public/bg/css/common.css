@@ -41,7 +41,7 @@ dd {
 
 body {
     margin: 0;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 a {
@@ -458,7 +458,7 @@ iframe {
 }
 
 /*表单字段*/
-.form-filed input, select {
+.form-filed input[type='text'],.form-filed input[type='password'], select {
     width: 330px;
     border: 1px solid #ccc;
     border-radius: 3px;
@@ -471,7 +471,11 @@ iframe {
 .form-filed input[type='radio'] {
     width: 20px;
 }
-
+.upload{
+    width: 692px;
+    text-align: left;
+    padding-left: 10px;
+}
 .form-filed select {
     width: 352px;
 }

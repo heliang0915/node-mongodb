@@ -1,6 +1,6 @@
 
 //引入基类
-var baseDao = require('./baseDao');
+var baseDao = require('./../baseDao');
 //baseDao.setModelName("member");
 module.exports=baseDao;
 

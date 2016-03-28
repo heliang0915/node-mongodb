@@ -1,4 +1,4 @@
-require(['datepicker', 'moment',"form"], function (datepicker, moment,form) {
+require(['datepicker', 'moment',"form"], function (datepicker, moment, form) {
     var birthday = $("#birthday");
     var now = moment().format('YYYY-MM-DD');
     var modify = {

@@ -14,7 +14,8 @@ $(function(){
             var leftDom = $('.left-column');
 
             var left = leftDom.width();
-            var right = $(window).width() - left ;
+            var width=window.screen.availWidth>$(window).width()?window.screen.availWidth:$(window).width();
+            var right = width - left ;
             leftDom.height(contentHeight);
             $('iframe').width(right);
             $('iframe').height(contentHeight);

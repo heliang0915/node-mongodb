@@ -1,12 +1,12 @@
 /**
- *商品标签路由
+ *权限点 路由
  */
 var express = require('express');
 var router = express.Router();
-var util=require("../util/util");
+var util=require("../../util/util");
 
 
-//访问商品标签首页
+//访问权限点首页
 router.route('/').all(function (req, res) {
     var params = util.getParams(req);
     console.log(params);

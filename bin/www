@@ -10,6 +10,10 @@ var http = require('http');
 var cluster = require('cluster');
 var cpuLen = require('os').cpus().length;
 var config = require('../backend/config');
+
+var redisCache=require("../backend/cache/redisCache");
+
+
 if (cluster.isMaster) {
     var pid = process.pid;
     console.log("主进程启动...");
@@ -32,6 +36,8 @@ if (cluster.isMaster) {
     });
 } else {
     app.set('port', process.env.PORT || 80);
-    var server = app.listen(app.get('port'), config.host);
+    var server = app.listen(app.get('port'), config.host, function () {
+        redisCache.reload();
+    });
 }
 
