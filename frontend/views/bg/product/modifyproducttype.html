@@ -5,60 +5,66 @@
     <title>商品类型操作</title>
     <% include ../common/commonCss.html %>
     <link type="text/css" rel="stylesheet" href="/bg/css/modify_column1.css">
+    <style>
+        .form-tip {
+            width: 142px;
+        }
+    </style>
 </head>
 <body>
-<form action="/producttype/save" class="form" method="post">
+<form action="/productType/save" class="form" method="post">
     <h1 class="form-title">商品类型添加</h1>
-
-
     <div class="form-group">
         <label class="form-tip">类型名称</label>
         <span class="form-filed">
-            <input type="text" required="true" value="<%=producttype.tagName%>" regText="" filedText="标签名称" id="tagName"
-                   autocomplete="off" name="tagName" placeholder="请输入商品类型...">
+            <input type="text" required="true" value="<%=productType.typeName%>" regText="" filedText="类型名称" id="typeName"  autocomplete="off" name="typeName" placeholder="请输入商品类型...">
         </span>
     </div>
-
-    <div class="form-group">
+    <div class="form-group radio">
         <label class="form-tip">此类型下商品是否拥有属性</label>
         <span class="form-filed">
-            <input type="text" required="true" value="<%=producttype.tagName%>" regText="" filedText="标签名称" id="tagName"
-                   autocomplete="off" name="tagName" placeholder="请输入商品类型...">
+              <input type="radio" name="isAttr" checked="checked" id="no" value="0"><label for="no">否</label>
+              <input type="radio" name="isAttr" <%=productType.isAttr==1?"checked":""%> value="1" id="yes"><label for="yes">是</label>
         </span>
     </div>
-    <div class="form-group">
+
+    <div class="form-group radio">
         <label class="form-tip">此类型下商品是否拥有参数</label>
         <span class="form-filed">
-            <input type="text" required="true" value="<%=producttype.tagName%>" regText="" filedText="标签名称" id="tagName"
-                   autocomplete="off" name="tagName" placeholder="请输入商品类型...">
+              <input type="radio" name="isParams" checked="checked" id="noParams" value="0"><label for="noParams">否</label>
+              <input type="radio" name="isParams" <%=productType.isParams==1?"checked":""%> value="1" id="yesParams"><label for="yesParams">是</label>
         </span>
     </div>
 
-    <div class="form-group">
+    <div class="form-group radio">
         <label class="form-tip">此类型是否关联品牌</label>
         <span class="form-filed">
-            <input type="text" required="true" value="<%=producttype.tagName%>" regText="" filedText="标签名称" id="tagName"
-                   autocomplete="off" name="tagName" placeholder="请输入商品类型...">
+               <input type="radio" name="isBrand" checked="checked" id="noBrand" value="0"><label for="noBrand">否</label>
+              <input type="radio" name="isBrand" <%=productType.isBrand==1?"checked":""%> value="1" id="yesBrand"><label for="yesBrand">是</label>
         </span>
     </div>
-    <div class="form-group">
+    <div class="form-group radio">
         <label class="form-tip">此类型是否关联规格</label>
         <span class="form-filed">
-            <input type="text" required="true" value="<%=producttype.tagName%>" regText="" filedText="标签名称" id="tagName"
-                   autocomplete="off" name="tagName" placeholder="请输入商品类型...">
+             <input type="radio" name="isSpecifications" checked="checked" id="noSpecifications" value="0"><label for="noSpecifications">否</label>
+             <input type="radio" name="isSpecifications" <%=productType.isSpecifications==1?"checked":""%> value="1" id="yesSpecifications"><label for="yesSpecifications">是</label>
         </span>
     </div>
-
     <div class="btn-group">
         <span class="btn primary" id="save">保存</span>
         <span class="btn gray" id="back">返回</span>
     </div>
-    <input type="hidden" id="uuid" name="uuid" value="<%=producttype.uuid%>">
-    <input type="hidden" id="order" name="order" value="<%=producttype.order%>">
+    <input type="hidden" id="uuid" name="uuid" value="<%=productType.uuid%>">
+    <input type="hidden" id="order" name="order" value="<%=productType.order%>">
+    <input type="hidden" id="attr" name="attr" value="<%=productType.attr%>">
+    <input type="hidden" id="params" name="params" value="<%=productType.params%>">
+    <input type="hidden" id="brand" name="brand" value="<%=productType.brand%>">
+    <input type="hidden" id="specifications" name="specifications" value="<%=productType.specifications%>">
+
 </form>
 </body>
 </html>
 <!--公共js 开始引入-->
 <% include ../common/commonJs.html %>
 <!--公共js 结束引入-->
-<script src="/bg/js/product/modify_producttype.js" type="text/javascript"></script>
+<script src="/bg/js/product/modify_productType.js" type="text/javascript"></script>

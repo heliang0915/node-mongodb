@@ -64,9 +64,9 @@ var  productBrand=new Schema({
 var productType=new Schema({
     uuid: String,
     typeName:String,//类型名称
-    attr:String, //关联属性uuid
-    params:String, //关联参数uuid
-    brand:String,//关联品牌uuid
+    attr:String, //关联属性uuid(多个用,隔开)
+    params:String, //关联参数uuid(多个用,隔开)
+    brand:String,//关联品牌uuid (多个用,隔开)
     specifications:String, //关联规格uuid
     isAttr:{type:Boolean, default:true},//此类型下商品是否拥有属性
     isParams:{type:Boolean, default:true},//此类型下商品是否拥有参数

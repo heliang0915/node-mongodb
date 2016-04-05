@@ -57,6 +57,7 @@ router.route('/modify').all(function (req, res) {
     var uuid = params.uuid;
     if (uuid) {
         productTypeDao.findByUUID(uuid, function (err, productType) {
+
             if (err) {
                 util.showErr(res, err);
             } else {

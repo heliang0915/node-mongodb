@@ -24,7 +24,8 @@ require.config({
 
         //业务js
         "form": "/bg/js/form",
-        "business": "/bg/js/business"
+        "business": "/bg/js/business",
+        "common":"/common/js/common"
     },
     shim: {
         //分页插件

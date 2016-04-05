@@ -131,10 +131,7 @@ router.route('/del').all(function (req, res) {
 
 //得到上级分类tree数据
 router.route('/getCategoryRankTree').all(function (req, res) {
-
     var modelData = util.getParams(req, productCategoryDao, config.productCategory.module);
-
-    console.log(+modelData.pid);
     var pid = -1;
     var id = "";
     if (modelData.pid) {
@@ -149,32 +146,45 @@ router.route('/getCategoryRankTree').all(function (req, res) {
         if (err) {
             console.log(err);
         } else {
-            docs.forEach(function (item) {
-                var node = {};
-                node["id"] = item.uuid;
-                node["name"] = item.categoryName;
-                (function (node, item) {
-                    productCategoryDao.isParent(item.uuid, function (err, isParent) {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            ++counter;
-                            node["isParent"] = isParent;
-                            if (id) {
-                                if (id != item.uuid) {
-                                    tree.push(node);
-                                }
-                            } else {
-                                tree.push(node);
-                            }
+            if(docs){
+                if(docs.length>0){
+                    docs.forEach(function (item) {
+                        var node = {};
+                        node["id"] = item.uuid;
+                        node["name"] = item.categoryName;
+                        //(function (node, item) {
+                            productCategoryDao.isParent(item.uuid, function (err, isParent) {
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                    ++counter;
+                                    node["isParent"] = isParent;
+                                    if (id) {
+                                        if (id != item.uuid) {
+                                            tree.push(node);
+                                        }
+                                    } else {
+                                        tree.push(node);
+                                    }
 
-                            if (counter == docs.length) {
-                                res.send(tree);
-                            }
-                        }
+                                    if (counter == docs.length) {
+                                        console.log("tree"+tree);
+                                        res.send(tree);
+                                    }
+                                }
+                            })
+                        //})(node, item)
                     })
-                })(node, item)
-            })
+                }else{
+                    res.send(tree);
+                }
+
+            }else{
+                res.send(tree);
+            }
+
+
+
         }
     });
 })

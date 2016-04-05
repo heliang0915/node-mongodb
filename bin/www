@@ -36,7 +36,7 @@ if (cluster.isMaster) {
         }, 2000);
     });
 } else {
-    app.set('port', process.env.PORT || 80);
+    app.set('port', process.env.PORT || 8080);
     var server = app.listen(app.get('port'), config.host, function () {
         console.log("服务器启动成功...");
         redisCache.reload();

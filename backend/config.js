@@ -10,9 +10,9 @@ exports.session_secret = 'todo session secret';
 //app 地址
 exports.host = "127.0.0.1";
 //redis 连接地址
-exports.redis_host = "192.168.1.119";
+exports.redis_host = "127.0.0.1";
 //数据库链接地址
-exports.url = 'mongodb://192.168.1.119:27017/node';
+exports.url = 'mongodb://127.0.0.1:27017/node';
 
 //上传文件存放位置
 exports.uploadDir = '../backend/uploaddir/';

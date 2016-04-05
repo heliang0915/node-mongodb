@@ -21,6 +21,7 @@ define(["util","lay"],function(util,layer){
                 var url=formDom.attr("action");
                 var  uuid=$("#uuid").val();
                 var data=formDom.serializeObject();
+                console.log("data>>>"+data);
                 if(flag){
                     util.ajax(url,function (json) {
                         var msg=json.msg;
