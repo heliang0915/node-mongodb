@@ -104,7 +104,7 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
 
     //打开操作对话框
     function openOptDialog(title, url) {
-        title = "[<b>"+title+"</b>]对话框";
+        title = "[<b> "+title+" </b>] 对话框";
 
         layer.open({
             type: 2,
@@ -123,8 +123,6 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
             }
         });
     }
-
-
     //初始化
     producttype.init(pageParams);
 });
