@@ -67,6 +67,16 @@ exports.productBrand = {
     pageIndex: 1
 }
 
+//商品类型
+exports.productType = {
+    module: "productType",//schema模块名称
+    title:"商品类型",
+    index: "bg/product/producttype",
+    list: 'bg/product/producttypelist',
+    modifyPage: 'bg/product/modifyproducttype',
+    pageIndex: 1
+}
+
 //订单
 exports.order = {
     index: "bg/order/order",

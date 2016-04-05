@@ -39,16 +39,19 @@
 
         </span>
     </div>
-    <div class="form-group">
-        <label class="form-tip">上级分类</label>
+    <div class="form-group" style="height:auto;">
+        <label class="form-tip" style="vertical-align: top">上级分类</label>
         <span class="form-filed">
-             <select name="pid" class="select" required="true"    filedText="上级分类"  id="pid">
+            <ul id="parentRankTree" class="ztree select"></ul>
+            <input type="hidden" id="pid" name="pid" value="<%=productCategory.pid%>" >
+
+             <!--<select name="pid" class="select" required="true"    filedText="上级分类"  id="pid">
                  <option value="">请选择...</option>
 
                  <option value="1">水果</option>
                  <option value="2">香蕉</option>
 
-             </select>
+             </select>-->
         </span>
     </div>
     <div class="form-group">

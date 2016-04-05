@@ -7,20 +7,23 @@ require.config({
         //第三方
         "jquery": "/lib/jquery.min",
         "text": "/lib/text",
-        "moment":"/lib/moment",
+        "moment": "/lib/moment",
         "layer": "/weight/layer/layer",
         "pagination": "/weight/pagination/jquery.pagination",
         "laydate": "/weight/datepicker/laydate",
+        "ztree": "/weight/tree/jquery.ztree.all.min",
 
         //组件js
         "lay": "/weight/layer/lay",
         "page": "/weight/pagination/page",
-        "datepicker":"/weight/datepicker/datepicker",
-        "upload":"/weight/upload/upload",
+        "datepicker": "/weight/datepicker/datepicker",
+        "upload": "/weight/upload/upload",
+        "tree": "/weight/tree/tree",
         "util": "/bg/js/util",
 
+
         //业务js
-        "form":"/bg/js/form",
+        "form": "/bg/js/form",
         "business": "/bg/js/business"
     },
     shim: {
@@ -40,6 +43,10 @@ require.config({
         },
         'moment': {
             exports: 'moment'
+        },
+        'ztree': {
+            deps: ['jquery'],
+            exports: 'ztree'
         }
     }
 });

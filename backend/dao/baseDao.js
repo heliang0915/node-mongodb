@@ -18,7 +18,11 @@ exports.setModelName = function (modelNa) {
     modelName = modelNa;
     //model = require(modelPath + "schemas");
     ModelSchema[modelName] = mongoose.model(modelName);
+    exports.modelName=modelName;
+    exports.model=model;
 }
+
+
 /*生成uuid*/
 function getUUID() {
     var reg = /\-/g;
