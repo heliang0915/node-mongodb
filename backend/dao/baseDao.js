@@ -55,7 +55,7 @@ var count = exports.count = function (data, callback) {
     data = data == undefined ? {} : data;
     callback = callback == undefined ? function () {
     } : callback;
-    console.log(modelName);
+    console.log("modelName>>>"+modelName);
     model[modelName].count(data, function (err, len) {
         if (err) {
             callback(err);

@@ -44,10 +44,19 @@ router.route('/page').all(function (req, res) {
     console.log(".......page");
     var currentPage = params.currentPage;
     var searchData = util.getSearchData(params);
+    console.log(searchData)
+
     productBrandDao.page(currentPage, searchData, function (err, productBrands) {
-        var json = {};
-        json.data = productBrands;
-        res.send(json);
+        if(err){
+            console.log(err);
+
+        }else{
+            console.log("productBrands"+productBrands.length);
+            var json = {};
+            json.data = productBrands;
+            res.send(json);
+        }
+
     });
 });
 

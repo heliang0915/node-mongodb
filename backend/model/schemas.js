@@ -146,6 +146,6 @@ exports.productType = db.model('productType', productType); //商品类型
 exports.productCategory = db.model('productCategory', productCategory); //商品分类
 exports.productBrand = db.model('productBrand', productBrand); //商品品牌
 
-exports.productBrand = db.model('productAttr', productAttr); //商品属性
-exports.productBrand = db.model('productParams', productParams); //商品参数
-exports.productBrand = db.model('productSpecifications', productSpecifications); //商品规格
+exports.productAttr = db.model('productAttr', productAttr); //商品属性
+exports.productParams = db.model('productParams', productParams); //商品参数
+exports.productSpecifications = db.model('productSpecifications', productSpecifications); //商品规格

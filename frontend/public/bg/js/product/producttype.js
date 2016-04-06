@@ -36,13 +36,13 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
             }
         });
 
-
         //注册修改 属性 参数 关联品牌 关联规格
         $('a[name^="modify_"]').on('click', function () {
             var fileName = $(this).attr("data-name");
             var uuid = $(this).attr("data");
             var title = "";
             var url = "";
+            var index=0;
             switch (fileName) {
                 case "attr":
                     title="属性";
@@ -51,22 +51,21 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
                 case "params":
                     title="参数";
                     url = "";
+                    index=1;
                     break;
                 case "brand":
-                    title="品牌";
+                    title="关联品牌";
                     url = "";
+                    index=2;
                     break;
                 case "specifications":
-                    title="规格";
+                    title="关联规格";
                     url = "";
+                    index=3;
                     break;
             }
-
-            openOptDialog(title,url);
-
+            openOptDialog(title,url,index);
         })
-
-
     }
 
 
@@ -81,12 +80,12 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
             html += "<tr>";
             html += '<td><input type="checkbox" name="check" value="' + item.uuid + '"></td>';
             for (var file in showFileds) {
-                var text = "";
+                var text = "无";
                 if (file != "typeName") {
                     html += '<td class="opt">';
                     var fileName = "is" + common.toFirstUpper(file);
                     if (item[fileName]) {
-                        text = '<a href="###" data="' + item.uuid + '" data-name="' + file + '" name="modify_' + file + '">&#xe609;</a>';
+                        text = '<a href="###" data="' + item.uuid + '" data-name="' + file + '" name="modify_' + file + '">&#xe60a;</a>';
                     }
                 } else {
                     html += "<td>";
@@ -103,14 +102,21 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
     }
 
     //打开操作对话框
-    function openOptDialog(title, url) {
-        title = "[<b> "+title+" </b>] 对话框";
+    function openOptDialog(title, url,index) {
+        title = "["+title+"] 对话框";
+
+        var w='800px';
+        var h='350px';
+        if(index==2||index==3){
+            w='500px';
+            h='300px';
+        }
 
         layer.open({
             type: 2,
             title: title,
-            area: ['500px', '330px'],
-            content: 'http://www.baidu.com',
+            area: [w, h],
+            content: '/producttype/relationspec?type='+index,
             btn: ['保存', '取消'],
             yes: function () {
                 alert('保存');

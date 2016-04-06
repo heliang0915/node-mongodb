@@ -3,22 +3,32 @@
  */
 var express = require('express');
 var router = express.Router();
-var util=require("../../util/util");
+var util = require("../../util/util");
 var productTypeDao = require('../../dao/product/productTypeDao');
+//品牌dao
+var productBrandDao = require('../../dao/product/productBrandDao');
+//var productBrandDao = require('../../dao/product/productBrandDao');
+
+
 var message = require("../../util/message");
-var config=require("../../config");
+var config = require("../../config");
 
 //访问商品类型首页
 router.route('/').all(function (req, res) {
-    var params=util.getParams(req);
-    res.render(config.product.index, {title:config.productType.title,action:config.productType.module.toLocaleLowerCase(), pageIndex:config.product.pageIndex,active:'active'});
+    var params = util.getParams(req);
+    res.render(config.product.index, {
+        title: config.productType.title,
+        action: config.productType.module.toLocaleLowerCase(),
+        pageIndex: config.product.pageIndex,
+        active: 'active'
+    });
 })
 
 
 //访问列表
 router.route('/list').all(function (req, res) {
     //var params=util.getParams(req);
-    var totalCount=10;
+    var totalCount = 10;
     console.log("商品类型-list......");
     var params = util.getParams(req, productTypeDao, config.productType.module);
     var searchText = "";
@@ -40,7 +50,7 @@ router.route('/list').all(function (req, res) {
 
 //ajax分页
 router.route('/page').all(function (req, res) {
-    var params = util.getParams(req,productTypeDao,config.productType.module);
+    var params = util.getParams(req, productTypeDao, config.productType.module);
     console.log(".......page");
     var currentPage = params.currentPage;
     var searchData = util.getSearchData(params);
@@ -53,7 +63,7 @@ router.route('/page').all(function (req, res) {
 
 //跳转新增页面
 router.route('/modify').all(function (req, res) {
-    var params = util.getParams(req,productTypeDao,config.productType.module);
+    var params = util.getParams(req, productTypeDao, config.productType.module);
     var uuid = params.uuid;
     if (uuid) {
         productTypeDao.findByUUID(uuid, function (err, productType) {
@@ -74,7 +84,7 @@ router.route('/modify').all(function (req, res) {
 });
 //保存数据
 router.route('/save').all(function (req, res) {
-    var modelData = util.getParams(req,productTypeDao,config.productType.module);
+    var modelData = util.getParams(req, productTypeDao, config.productType.module);
     var str = "";
     var state = "ok";
     var json = {};
@@ -104,7 +114,7 @@ router.route('/save').all(function (req, res) {
 });
 //删除数据
 router.route('/del').all(function (req, res) {
-    var modelData = util.getParams(req,productTypeDao,config.productType.module);
+    var modelData = util.getParams(req, productTypeDao, config.productType.module);
     var str = "";
     var state = "ok";
     var json = {};
@@ -121,6 +131,30 @@ router.route('/del').all(function (req, res) {
     });
 });
 
+//跳转 关联规格 关联品牌
+router.route('/relationspec').all(function (req, res) {
+    var modelData = util.getParams(req, productTypeDao, config.productType.module);
+    var type = modelData.type;
+     if (type == 2) { //关联品牌
+        productBrandDao.setModelName(config[config.productBrand.module]["module"]);
+
+        productBrandDao.findAll(function (err, brands) {
+            if (err) {
+                util.showErr(res, err);
+            } else {
+                res.render(config.productType.relationspec, {
+                    list: brands,
+                    type:type
+                });
+            }
+        });
+    } else if (type == 3) { //关联规格
+         res.render(config.productType.relationspec, {
+             list: [],
+             type:type
+         });
+    }
+});
 
 
 module.exports = router;

@@ -9,8 +9,8 @@
 
 @font-face {
     font-family: 'iconfont';
-    src: url('//at.alicdn.com/t/font_1457858985_074804.eot'); /* IE9*/
-    src: url('//at.alicdn.com/t/font_1457858985_074804.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('//at.alicdn.com/t/font_1457858985_074804.woff') format('woff'), /* chrome、firefox */ url('//at.alicdn.com/t/font_1457858985_074804.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('//at.alicdn.com/t/font_1457858985_074804.svg#iconfont') format('svg'); /* iOS 4.1- */
+    src: url('//at.alicdn.com/t/font_1459860664_5487816.eot'); /* IE9*/
+    src: url('//at.alicdn.com/t/font_1459860664_5487816.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('//at.alicdn.com/t/font_1459860664_5487816.woff') format('woff'), /* chrome、firefox */ url('//at.alicdn.com/t/font_1459860664_5487816.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('//at.alicdn.com/t/font_1459860664_5487816.svg#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 * {
@@ -458,7 +458,7 @@ iframe {
 }
 
 /*表单字段*/
-.form-filed input[type='text'],.form-filed input[type='password'], select {
+.form-filed input[type='text'], .form-filed input[type='password'], select {
     width: 330px;
     border: 1px solid #ccc;
     border-radius: 3px;
@@ -471,35 +471,77 @@ iframe {
 .form-filed input[type='radio'] {
     width: 20px;
 }
-.upload{
+
+.upload {
     width: 692px;
     text-align: left;
     padding-left: 10px;
 }
+
 .form-filed select {
     width: 352px;
 }
 
-.form_err_tip{
+.form_err_tip {
     position: absolute;
     top: 40px;
     left: 104px;
     color: red;
 }
-.require{
+
+.require {
     color: red;
     font-style: normal;
     font-weight: bold;
-    font-size:14px;
+    font-size: 14px;
     position: relative;
     top: 3px;
     left: 3px;
 }
 
+/*select列表样式*/
+.formList {
+    width: 200px;
+    height: 205px;
+}
+
+.selector {
+    position: relative;
+}
+
+.selector .left {
+    float: left;
+}
+
+.selector .right {
+    float: right;
+}
+
+.selector .center {
+    position: absolute;
+    height: 100%;
+    top:20px;
+    left:218px;
+    text-align: center;
+}
+.center .btn{
+    margin-top:20px;
+    padding: 6px 20px;
+    display: block;
+}
 /*公共表单样式结束*/
 
+/*重写dialog样式*/
+.layui-layer-title {
+    background-color: #2e8ded !important;
+    color: #fff !important;
+}
 
+.layui-layer-setwin .layui-layer-close1 {
+    background-position: -187px -38px !important;
+}
 
+/*重写dialog样式*/
 
 
 
