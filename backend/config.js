@@ -74,6 +74,7 @@ exports.productType = {
     index: "bg/product/producttype",
     list: 'bg/product/producttypelist',
     modifyPage: 'bg/product/modifyproducttype',
+    relationspec:'bg/product/relationspec',//关联规格
     pageIndex: 1
 }
 

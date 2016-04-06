@@ -137,13 +137,13 @@ router.route('/relationspec').all(function (req, res) {
     var type = modelData.type;
      if (type == 2) { //关联品牌
         productBrandDao.setModelName(config[config.productBrand.module]["module"]);
-
         productBrandDao.findAll(function (err, brands) {
             if (err) {
                 util.showErr(res, err);
             } else {
                 res.render(config.productType.relationspec, {
                     list: brands,
+                    title:'关联品牌',
                     type:type
                 });
             }
@@ -151,6 +151,7 @@ router.route('/relationspec').all(function (req, res) {
     } else if (type == 3) { //关联规格
          res.render(config.productType.relationspec, {
              list: [],
+             title:'关联规格',
              type:type
          });
     }
