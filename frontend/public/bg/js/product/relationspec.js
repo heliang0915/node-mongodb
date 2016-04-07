@@ -2,7 +2,7 @@ require(['lay'], function (layer) {
     var relation = {};
     relation.init = function () {
         this.initEvent();
-
+        this.showUUID();
     }
 
     //注册事件
@@ -61,6 +61,7 @@ require(['lay'], function (layer) {
 
     //回显数据
     relation.showUUID = function () {
+
         if (uuids) {
             var ary = [];
             if (uuids.indexOf(',') > -1) {
@@ -68,22 +69,22 @@ require(['lay'], function (layer) {
             } else {
                 ary.push(uuids);
             }
+            var toList = $("#toList");
+            var fromListOptions = $("#formList").find('option');
 
-            var iframe = $('iframe');
-            var win = iframe[0].contentWindow;
-            var toList = $(win.document.getElementById('toList'));
-            var fromListOptions = $(win.document.getElementById('fromList')).find('option');
             for (var i = 0; i < ary.length; i++) {
                 var dom;
                 var uuid = ary[i];
                 fromListOptions.each(function () {
                     var val = $(this).val();
                     if (uuid == val) {
-                        dom = $(this);
+                        dom = $(this).clone();
                         return;
                     }
-                })
-                toList.append(dom);
+                });
+                if (dom.length > 0) {
+                    toList.append(dom);
+                }
             }
         }
 

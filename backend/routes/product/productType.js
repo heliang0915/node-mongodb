@@ -135,28 +135,38 @@ router.route('/del').all(function (req, res) {
 router.route('/relationspec').all(function (req, res) {
     var modelData = util.getParams(req, productTypeDao, config.productType.module);
     var type = modelData.type;
-    var uuids=modelData.uuids;
+    //var uuids=modelData.uuids;
     if (type == 2) { //关联品牌
         productBrandDao.setModelName(config[config.productBrand.module]["module"]);
         productBrandDao.findAll(function (err, brands) {
             if (err) {
                 util.showErr(res, err);
             } else {
-
-                res.render(config.productType.relationspec, {
-                    list: brands,
-                    type: type,
-                    uuids:uuids
+                productTypeDao.setModelName(config[config.productType.module]["module"]);
+                //查询产品类型
+                console.log(modelData);
+                productTypeDao.find({uuid: modelData.uuid}, function (err, productType) {
+                    if (err) {
+                        util.showErr(res, err);
+                    } else {
+                        res.render(config.productType.relationspec, {
+                            list: brands,
+                            type: type,
+                            uuids: productType[0].brand
+                        });
+                    }
                 });
             }
         });
     } else if (type == 3) { //关联规格
+        console.log("关联规格");
         res.render(config.productType.relationspec, {
             list: [],
             type: type,
-            uuids:uuids
+            uuids: ""
         });
     }
+
 });
 
 
@@ -187,7 +197,6 @@ router.route('/saveUUID').all(function (req, res) {
     });
 
 })
-
 
 
 module.exports = router;

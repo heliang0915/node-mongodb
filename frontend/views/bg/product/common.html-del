@@ -1,0 +1,32 @@
+<div class="left-column">
+    <div class="service">
+        <h5>商品管理</h5>
+    </div>
+    <!--分类1-->
+    <dl class="call">
+        <div class="down">
+            <dt>商品管理</dt>
+            <dd><a href="#">商品列表</a></dd>
+            <dd><a href="#">进货</a></dd>
+            <dd><a href="#">仓库维护</a></dd>
+        </div>
+    </dl>
+    <!--商品设置-->
+    <dl class="call">
+        <div class="up">
+            <dt>商品设置</dt>
+            <dd><a href="/productcategory">分类列表</a></dd>
+            <dd><a href="#">品牌列表</a></dd>
+            <dd><a href="#">类型列表</a></dd>
+            <dd><a href="#">规格列表</a></dd>
+        </div>
+    </dl>
+    <!--标签管理-->
+    <dl class="call">
+        <div class="up">
+            <dt>标签管理</dt>
+            <dd><a href="/producttag">标签列表</a></dd>
+            <dd><a href="#">标签商品设置</a></dd>
+        </div>
+    </dl>
+</div>

@@ -104,7 +104,6 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
 
     //打开操作对话框
     producttype.openOptDialog = function (title, url, index,uuid,uuids) {
-
         var _this = this;
         uuids==undefined?"":uuids;
         title = "[" + title + "] 对话框";
@@ -114,12 +113,11 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
             w = '500px';
             h = '300px';
         }
-
         layer.open({
             type: 2,
             title: title,
             area: [w, h],
-            content: '/producttype/relationspec?type=' + index+"&uuids="+uuids,
+            content: '/producttype/relationspec?type=' + index+"&uuids="+uuids+"&uuid="+uuid,
             btn: ['保存', '取消'],
             yes: function () {
                 var uuids = _this.getSelectedUUIDS();
@@ -133,7 +131,12 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
                 data.uuids = uuids;
                 data.type = index;
                 data.uuid=uuid;
-                _this.save(url, data);
+                _this.save(url, data, function () {
+                    var iframe = $('iframe');
+                    var win = iframe[0].contentWindow;
+                    win.uuids=uuids;
+
+                });
 
                 //alert('保存' + uuids);
             },
