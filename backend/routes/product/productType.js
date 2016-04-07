@@ -135,26 +135,59 @@ router.route('/del').all(function (req, res) {
 router.route('/relationspec').all(function (req, res) {
     var modelData = util.getParams(req, productTypeDao, config.productType.module);
     var type = modelData.type;
-     if (type == 2) { //关联品牌
+    var uuids=modelData.uuids;
+    if (type == 2) { //关联品牌
         productBrandDao.setModelName(config[config.productBrand.module]["module"]);
-
         productBrandDao.findAll(function (err, brands) {
             if (err) {
                 util.showErr(res, err);
             } else {
+
                 res.render(config.productType.relationspec, {
                     list: brands,
-                    type:type
+                    type: type,
+                    uuids:uuids
                 });
             }
         });
     } else if (type == 3) { //关联规格
-         res.render(config.productType.relationspec, {
-             list: [],
-             type:type
-         });
+        res.render(config.productType.relationspec, {
+            list: [],
+            type: type,
+            uuids:uuids
+        });
     }
 });
+
+
+//保存 品牌 或 规格的 uuid
+router.route('/saveUUID').all(function (req, res) {
+    var modelData = util.getParams(req, productTypeDao, config.productType.module);
+    var type = modelData.type;
+    var data = {};
+    var typeName = "品牌";
+    var state = "ok";
+    var str = "";
+    if (type == 2) { //修改品牌
+        data.brand = modelData.uuids;
+    } else if (type == 3) { //修改规格
+        typeName = "规格";
+        data.specifications = modelData.uuids;
+    }
+    productTypeDao.edit(modelData.uuid, data, function (err) {
+
+        if (err) {
+            str = err;
+            state = "err";
+        } else {
+            str = typeName + "保存成功！";
+        }
+        json = message.parseJSON(state, str);
+        res.send(json);
+    });
+
+})
+
 
 
 module.exports = router;

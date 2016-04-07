@@ -40,34 +40,35 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
         $('a[name^="modify_"]').on('click', function () {
             var fileName = $(this).attr("data-name");
             var uuid = $(this).attr("data");
+            var uuids=$(this).attr('data-val');
+
             var title = "";
             var url = "";
-            var index=0;
+            var index = 0;
             switch (fileName) {
                 case "attr":
-                    title="属性";
+                    title = "属性";
                     url = "";
                     break;
                 case "params":
-                    title="参数";
+                    title = "参数";
                     url = "";
-                    index=1;
+                    index = 1;
                     break;
                 case "brand":
-                    title="关联品牌";
+                    title = "关联品牌";
                     url = "";
-                    index=2;
+                    index = 2;
                     break;
                 case "specifications":
-                    title="关联规格";
+                    title = "关联规格";
                     url = "";
-                    index=3;
+                    index = 3;
                     break;
             }
-            openOptDialog(title,url,index);
+            producttype.openOptDialog(title, url, index,uuid,uuids);
         })
     }
-
 
     //分页回调
     pageParams.callback = function (json) {
@@ -85,7 +86,7 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
                     html += '<td class="opt">';
                     var fileName = "is" + common.toFirstUpper(file);
                     if (item[fileName]) {
-                        text = '<a href="###" data="' + item.uuid + '" data-name="' + file + '" name="modify_' + file + '">&#xe60a;</a>';
+                        text = '<a href="###" data="' + item.uuid + '" data-val="'+item[file]+'" data-name="' + file + '" name="modify_' + file + '">&#xe60a;</a>';
                     }
                 } else {
                     html += "<td>";
@@ -102,24 +103,39 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
     }
 
     //打开操作对话框
-    function openOptDialog(title, url,index) {
-        title = "["+title+"] 对话框";
+    producttype.openOptDialog = function (title, url, index,uuid,uuids) {
 
-        var w='800px';
-        var h='350px';
-        if(index==2||index==3){
-            w='500px';
-            h='300px';
+        var _this = this;
+        uuids==undefined?"":uuids;
+        title = "[" + title + "] 对话框";
+        var w = '800px';
+        var h = '350px';
+        if (index == 2 || index == 3) {
+            w = '500px';
+            h = '300px';
         }
 
         layer.open({
             type: 2,
             title: title,
             area: [w, h],
-            content: '/producttype/relationspec?type='+index,
+            content: '/producttype/relationspec?type=' + index+"&uuids="+uuids,
             btn: ['保存', '取消'],
             yes: function () {
-                alert('保存');
+                var uuids = _this.getSelectedUUIDS();
+                if (uuids == "") {
+                    layer.msg("亲,请选择一条记录~~~", {time: 2000, icon: 0});
+                    return;
+                }
+
+                var data = {};
+                var url = "/producttype/saveUUID";
+                data.uuids = uuids;
+                data.type = index;
+                data.uuid=uuid;
+                _this.save(url, data);
+
+                //alert('保存' + uuids);
             },
             btn2: function () {
                 layer.closeAll();
@@ -129,6 +145,41 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
             }
         });
     }
+    //获取uuids
+    producttype.getSelectedUUIDS = function () {
+        var iframe = $('iframe');
+        var win = iframe[0].contentWindow;
+        var options = $(win.document.getElementById('toList')).find("option");
+        var uuidAry = [];
+        options.each(function () {
+            var uuid = $(this).val();
+            uuidAry.push(uuid);
+        });
+        var uuids = uuidAry.join(",");
+        return uuids;
+    }
+
+    //保存方法 品牌 / 规格 将规格或品牌的uuid保存到数据库中
+    producttype.save = function (url, data, callback) {
+        callback = (typeof callback == "function" ? callback : function () {
+        });
+        util.ajax(url, function (json) {
+            var msg = json.msg;
+            var state = json.state;
+            var icon = (state == "ok" ? 6 : 5);
+            layer.msg(msg, {time: 2000, icon: icon});
+            if(state=="ok"){
+                setTimeout(function () {
+                    layer.closeAll();
+                },2000);
+            }
+            callback();
+        }, data);
+
+    }
+
+
+
     //初始化
     producttype.init(pageParams);
 });
