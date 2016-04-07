@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><%=title%></title>
+    <title>关联</title>
     <% include ../common/commonCss.html %>
 </head>
 <body>
@@ -13,10 +13,8 @@
             list.forEach(function(item){%>
             <option value="<%=item.uuid%>">
                 <%
-                  console.log(type);
-                if(type==2){  %>
+                if(type==2){%>
                      <%=item.brandName%>
-
                 <% }else if(type==3){%>
                      <%=item.specificationsName%>
                 <% }%>
