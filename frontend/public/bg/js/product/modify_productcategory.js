@@ -1,4 +1,6 @@
 require(["form", "upload", 'tree'], function (form, upload, mytree) {
+    form.init();
+
     $("#categoryPic_tip").css({
         top: 9,
         left: 310

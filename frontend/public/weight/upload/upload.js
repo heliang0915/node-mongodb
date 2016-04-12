@@ -9,13 +9,13 @@ define(["lay"], function (layer) {
         return upload;
     };
     Upload.init = function (options) {
-        this.id =options.id;  //上传按钮
-        this.uploadId=$("#"+options.id).attr("ref"); //上传 input的真正元素
-        this.action=options.action||"upload";
-        this.attachment=options.attachment==true?true:false; //是否为附件
-        this.uploadCallback=options.uploadCallback; //上传回调
-        attachment=this.attachment;
-        callback= this.uploadCallback;
+        this.id = options.id;  //上传按钮
+        this.uploadId = $("#" + options.id).attr("ref"); //上传 input的真正元素
+        this.action = options.action || "upload";
+        this.attachment = options.attachment == true ? true : false; //是否为附件
+        this.uploadCallback = options.uploadCallback; //上传回调
+        attachment = this.attachment;
+        callback = this.uploadCallback;
     }
 
     Upload.fn = Upload.prototype = Upload.init.prototype;
@@ -27,16 +27,15 @@ define(["lay"], function (layer) {
     }
     //初始化dom
     Upload.fn.initDom = function () {
-        var self=this;
+        var self = this;
         var reg = /\{(\w+)\}/g;
         var uploadIframe = $("#uploadIframe");
-        formTemplate = formTemplate.replace(reg, function () {
-            var key=arguments[1];
+        var tempTemplate = formTemplate.replace(reg, function () {
+            var key = arguments[1];
             return self[key];
         });
-        $("#" + this.id).after($(formTemplate));
-        $("#"+this.id+"_form").append( $("#" + this.uploadId));
-        //$("#" + this.id).appendTo($(formTemplate));
+        $("#" + this.id).after($(tempTemplate));
+        $("#" + this.id + "_form").append($("#" + this.uploadId));
         if (uploadIframe.length == 0) {
             $("body").append($(iframeTemplate));
         }
@@ -52,25 +51,26 @@ define(["lay"], function (layer) {
                 form.submit();
             }
         })
-        $("#" + this.id).on("click",function(){
+        $("#" + this.id).on("click", function () {
             $("#" + self.uploadId).trigger('click');
         })
     }
 
-    function uploadSuccess(err, fileName) {
+    function uploadSuccess(err, fileName, fieldName) {
         if (err) {
-            layer.msg("喔呦，上传出错了"+err, {time: 12000, icon: 5});
+            layer.msg("喔呦，上传出错了" + err, {time: 12000, icon: 5});
         } else {
-            var  path="/download/"+fileName+"/"+attachment;
-            if(callback&&typeof  callback=="function"){
-                layer.msg('正在玩命上传...',{time: 2000});
-                setTimeout(function(){
-                    callback(path);
+            var path = "/download/" + fileName + "/" + attachment;
+            if (callback && typeof  callback == "function") {
+                layer.msg('正在玩命上传...', {time: 2000});
+                setTimeout(function () {
+                    callback(path, fieldName);
                     layer.msg('上传成功了喔', {icon: 6});
-                },2000);
+                }, 2000);
             }
         }
     }
-    window.uploadSuccess=uploadSuccess;
+
+    window.uploadSuccess = uploadSuccess;
     return Upload;
 });

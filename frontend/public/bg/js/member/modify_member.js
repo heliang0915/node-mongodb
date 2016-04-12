@@ -1,4 +1,5 @@
 require(['datepicker', 'moment',"form"], function (datepicker, moment, form) {
+    form.init();
     var birthday = $("#birthday");
     var now = moment().format('YYYY-MM-DD');
     var modify = {

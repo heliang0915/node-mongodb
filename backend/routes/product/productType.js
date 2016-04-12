@@ -7,7 +7,7 @@ var util = require("../../util/util");
 var productTypeDao = require('../../dao/product/productTypeDao');
 //品牌dao
 var productBrandDao = require('../../dao/product/productBrandDao');
-//var productBrandDao = require('../../dao/product/productBrandDao');
+var productSpecificationsDao = require('../../dao/product/productSpecificationsDao');
 
 
 var message = require("../../util/message");
@@ -144,7 +144,6 @@ router.route('/relationspec').all(function (req, res) {
             } else {
                 productTypeDao.setModelName(config[config.productType.module]["module"]);
                 //查询产品类型
-                console.log(modelData);
                 productTypeDao.find({uuid: modelData.uuid}, function (err, productType) {
                     if (err) {
                         util.showErr(res, err);
@@ -160,10 +159,27 @@ router.route('/relationspec').all(function (req, res) {
         });
     } else if (type == 3) { //关联规格
         console.log("关联规格");
-        res.render(config.productType.relationspec, {
-            list: [],
-            type: type,
-            uuids: ""
+
+        productSpecificationsDao.setModelName(config[config.productSpecifications.module]["module"]);
+
+        productSpecificationsDao.findAll(function (err, productSpecifications) {
+            if (err) {
+                util.showErr(res, err);
+            } else {
+                productTypeDao.setModelName(config[config.productType.module]["module"]);
+                //查询产品类型
+                productTypeDao.find({uuid: modelData.uuid}, function (err, productType) {
+                    if (err) {
+                        util.showErr(res, err);
+                    } else {
+                        res.render(config.productType.relationspec, {
+                            list: productSpecifications,
+                            type: type,
+                            uuids: productType[0].specifications
+                        });
+                    }
+                });
+            }
         });
     }
 
@@ -184,6 +200,10 @@ router.route('/saveUUID').all(function (req, res) {
         typeName = "规格";
         data.specifications = modelData.uuids;
     }
+
+
+   console.log(modelData);
+
     productTypeDao.edit(modelData.uuid, data, function (err) {
 
         if (err) {

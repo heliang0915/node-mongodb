@@ -40,8 +40,8 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
         $('a[name^="modify_"]').on('click', function () {
             var fileName = $(this).attr("data-name");
             var uuid = $(this).attr("data");
-            var uuids=$(this).attr('data-val');
-
+            var uuids = $(this).attr('data-val');
+            uuids == undefined ? "" : uuids;
             var title = "";
             var url = "";
             var index = 0;
@@ -52,21 +52,22 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
                     break;
                 case "params":
                     title = "参数";
-                    url = "";
+                    url = "/productparams?ref="+uuid;
                     index = 1;
                     break;
                 case "brand":
                     title = "关联品牌";
-                    url = "";
                     index = 2;
+                    url = '/producttype/relationspec?type=' + index + "&uuids=" + uuids + "&uuid=" + uuid;
                     break;
                 case "specifications":
                     title = "关联规格";
-                    url = "";
                     index = 3;
+                    url = '/producttype/relationspec?type=' + index + "&uuids=" + uuids + "&uuid=" + uuid;
                     break;
             }
-            producttype.openOptDialog(title, url, index,uuid,uuids);
+
+            producttype.openOptDialog(title, url, index, uuid, uuids);
         })
     }
 
@@ -86,7 +87,7 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
                     html += '<td class="opt">';
                     var fileName = "is" + common.toFirstUpper(file);
                     if (item[fileName]) {
-                        text = '<a href="###" data="' + item.uuid + '" data-val="'+item[file]+'" data-name="' + file + '" name="modify_' + file + '">&#xe60a;</a>';
+                        text = '<a href="###" data="' + item.uuid + '" data-val="' + item[file] + '" data-name="' + file + '" name="modify_' + file + '">&#xe60a;</a>';
                     }
                 } else {
                     html += "<td>";
@@ -103,11 +104,12 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
     }
 
     //打开操作对话框
-    producttype.openOptDialog = function (title, url, index,uuid,uuids) {
+    producttype.openOptDialog = function (title, url, index, uuid, uuids) {
         var _this = this;
-        uuids==undefined?"":uuids;
+        //uuids==undefined?"":uuids;
         title = "[" + title + "] 对话框";
-        var w = '800px';
+
+        var w = '600px';
         var h = '350px';
         if (index == 2 || index == 3) {
             w = '500px';
@@ -117,28 +119,34 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
             type: 2,
             title: title,
             area: [w, h],
-            content: '/producttype/relationspec?type=' + index+"&uuids="+uuids+"&uuid="+uuid,
+            content: url,
             btn: ['保存', '取消'],
             yes: function () {
-                var uuids = _this.getSelectedUUIDS();
-                if (uuids == "") {
-                    layer.msg("亲,请选择一条记录~~~", {time: 2000, icon: 0});
-                    return;
-                }
+                if (index == 2 || index == 3) {
+                    var uuids = _this.getSelectedUUIDS();
+                    if (uuids == "") {
+                        layer.msg("亲,请选择一条记录~~~", {time: 2000, icon: 0});
+                        return;
+                    }
+                    var data = {};
+                    var url = "/producttype/saveUUID";
+                    data.uuids = uuids;
+                    data.type = index;
+                    data.uuid = uuid;
+                    _this.save(url, data, function () {
+                        var iframe = $('iframe');
+                        var win = iframe[0].contentWindow;
+                        win.uuids = uuids;
 
-                var data = {};
-                var url = "/producttype/saveUUID";
-                data.uuids = uuids;
-                data.type = index;
-                data.uuid=uuid;
-                _this.save(url, data, function () {
+                    });
+                } else if (index == 1) {
                     var iframe = $('iframe');
                     var win = iframe[0].contentWindow;
-                    win.uuids=uuids;
+                    var data= win.save(uuid);
 
-                });
+                    //alert(win.save);
+                }
 
-                //alert('保存' + uuids);
             },
             btn2: function () {
                 layer.closeAll();
@@ -171,16 +179,15 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
             var state = json.state;
             var icon = (state == "ok" ? 6 : 5);
             layer.msg(msg, {time: 2000, icon: icon});
-            if(state=="ok"){
+            if (state == "ok") {
                 setTimeout(function () {
                     layer.closeAll();
-                },2000);
+                }, 2000);
             }
             callback();
         }, data);
 
     }
-
 
 
     //初始化

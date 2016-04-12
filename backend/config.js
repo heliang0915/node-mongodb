@@ -8,7 +8,7 @@ exports.site_desc = 'Very simple todo, demo for connect web dev.';
 exports.session_secret = 'todo session secret';
 
 //app 地址
-exports.host = "127.0.0.1";
+exports.host = "192.168.1.103";
 //redis 连接地址
 exports.redis_host = "192.168.1.119";
 //数据库链接地址
@@ -42,7 +42,7 @@ exports.product = {
 exports.productTag = {
     module: "productTag",//schema模块名称
     title:"商品标签",
-    index: "bg/product/producttag",
+    //index: "bg/product/producttag",
     list: 'bg/product/producttaglist',
     modifyPage: 'bg/product/modifyproducttag',
     pageIndex: 1
@@ -52,7 +52,7 @@ exports.productTag = {
 exports.productCategory = {
     module: "productCategory",//schema模块名称
     title:"商品分类",
-    index: "bg/product/productcategory",
+    //index: "bg/product/productcategory",
     list: 'bg/product/productcategorylist',
     modifyPage: 'bg/product/modifyproductcategory',
     pageIndex: 1
@@ -61,7 +61,7 @@ exports.productCategory = {
 exports.productBrand = {
     module: "productBrand",//schema模块名称
     title:"商品品牌",
-    index: "bg/product/productbrand",
+    //index: "bg/product/productbrand",
     list: 'bg/product/productbrandlist',
     modifyPage: 'bg/product/modifyproductbrand',
     pageIndex: 1
@@ -71,12 +71,32 @@ exports.productBrand = {
 exports.productType = {
     module: "productType",//schema模块名称
     title:"商品类型",
-    index: "bg/product/producttype",
+    //index: "bg/product/producttype",
     list: 'bg/product/producttypelist',
     modifyPage: 'bg/product/modifyproducttype',
     relationspec:'bg/product/relationspec',
     pageIndex: 1
 }
+
+//商品规格
+exports.productSpecifications = {
+    module: "productSpecifications",//schema模块名称
+    title:"商品规格",
+    list: 'bg/product/productspecificationslist',
+    modifyPage: 'bg/product/modifyproductspecifications',
+    pageIndex: 1
+}
+
+//商品参数
+exports.productParams = {
+    module: "productParams",//schema模块名称
+    title:"商品参数",
+    list: 'bg/product/productparamslist',
+    modifyPage: 'bg/product/modifyproductparams',
+    pageIndex: 1
+}
+
+
 
 //订单
 exports.order = {

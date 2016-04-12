@@ -11,15 +11,14 @@ var errLogger = log4j.errLogger;
 
 //获取users的schema
 var modelName;
-var ModelSchema={};
-var model=require(modelPath + "schemas");
+var ModelSchema = {};
+var model = require(modelPath + "schemas");
 
 exports.setModelName = function (modelNa) {
     modelName = modelNa;
-    //model = require(modelPath + "schemas");
     ModelSchema[modelName] = mongoose.model(modelName);
-    exports.modelName=modelName;
-    exports.model=model;
+    exports.modelName = modelName;
+    exports.model = model;
 }
 
 
@@ -41,9 +40,9 @@ var getMaxOrder = exports.getMaxOrder = function (callback) {
             callback(err);
             errLogger.error(err);
         } else {
-            var order=1;
-            if(doc[0]){
-                order= doc[0].order;
+            var order = 1;
+            if (doc[0]) {
+                order = doc[0].order;
             }
             callback(null, order);
         }
@@ -55,7 +54,7 @@ var count = exports.count = function (data, callback) {
     data = data == undefined ? {} : data;
     callback = callback == undefined ? function () {
     } : callback;
-    console.log("modelName>>>"+modelName);
+    console.log("modelName>>>" + modelName);
     model[modelName].count(data, function (err, len) {
         if (err) {
             callback(err);
@@ -70,7 +69,7 @@ var count = exports.count = function (data, callback) {
 exports.add = function (modelData, callback) {
     /*获取uuid*/
     var tempUUID = getUUID();
-    var newModelSchema = new  ModelSchema[modelName]();
+    var newModelSchema = new ModelSchema[modelName]();
     getMaxOrder(function (err, order) {
         //console.log(order);
         for (var fileName in modelData) {
@@ -97,19 +96,20 @@ exports.add = function (modelData, callback) {
 exports.edit = function (uuid, editObj, callback) {
     callback = callback == undefined ? function () {
     } : callback;
-    findByUUID(uuid, function (err, user) {
+    findByUUID(uuid, function (err, model) {
         if (err) {
             callback(err);
             console.log("修改出现错误：" + err);
             errLogger.error(err);
         } else {
             //循环
+            console.log(model);
             for (var key in editObj) {
                 if (editObj[key] != undefined) {
-                    user[key] = editObj[key];
+                    model[key] = editObj[key];
                 }
             }
-            user.save(function (err) {
+            model.save(function (err) {
                 if (err) {
                     callback(err);
                     console.log("修改出现错误：" + err);

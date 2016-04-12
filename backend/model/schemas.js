@@ -85,7 +85,7 @@ var productAttr = new Schema({
     attrName: {type: String, default: ''},//属性名称
     attrSelectItem: {type: String, default: ''},//选择项(逗号分隔)
     unit: {type: String, default: ''}, //单位
-    ref:{type: String, default: ''}, //关联分类
+    ref: {type: String, default: ''}, //关联分类
     time: {type: String, default: new Date().getTime()}, //创建记录时间 默认排序标志
     order: Number  //排序
 });
@@ -93,9 +93,9 @@ var productAttr = new Schema({
 /*商品参数*/
 var productParams = new Schema({
     uuid: String,
-    paramGroupName: {type: String, default: ''},//参数组
-    paramList: {type: Array, default: []},//参数值 集合
-    ref:{type: String, default: ''}, //关联分类
+    params: {type: String, default: ''},//参数  {参数组1:[参数1,参数2,参数3]}
+    //paramList: {type: Array, default: []},//参数值 集合
+    ref: {type: String, default: ''}, //关联分类
     time: {type: String, default: new Date().getTime()}, //创建记录时间 默认排序标志
     order: Number  //排序
 });
@@ -106,7 +106,7 @@ var productSpecifications = new Schema({
     specificationsName: {type: String, default: ''},//规格名称
     specificationsNote: {type: String, default: ''},//规格备注
     type: {type: Number, default: 0},//显示类型 0代表文字 1代表图片
-    specificationsValList: {type: Array, default: []},//规格值名称 数组 [{val:'1GB','picPath':'./pic.jpg'},{val:'2GB','picPath':'./pic.jpg'}]
+    specificationsValList: {type: String, default: ''},//规格值名称 数组 [{val:'1GB','picPath':'./pic.jpg'},{val:'2GB','picPath':'./pic.jpg'}]
     time: {type: String, default: new Date().getTime()}, //创建记录时间 默认排序标志
     order: Number  //排序
 });
@@ -122,11 +122,9 @@ var productTag = new Schema({
 
 
 /*商品*/
-var product=new Schema({
-     refCategory:{}   //商品分类
+var product = new Schema({
+    refCategory: {}   //商品分类
 });
-
-
 
 
 /*标签商品设置*/

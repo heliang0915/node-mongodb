@@ -6,9 +6,11 @@ require.config({
     paths: {
         //第三方
         "jquery": "/lib/jquery.min",
+        "json2": "/lib/json2",
         "text": "/lib/text",
         "moment": "/lib/moment",
         "layer": "/weight/layer/layer",
+        "layer.ext": "/weight/layer/extend/layer.ext",
         "pagination": "/weight/pagination/jquery.pagination",
         "laydate": "/weight/datepicker/laydate",
         "ztree": "/weight/tree/jquery.ztree.all.min",
@@ -29,6 +31,10 @@ require.config({
     },
     shim: {
         //分页插件
+        'json2': {
+            exports: 'json2'
+        },
+        //分页插件
         'pagination': {
             deps: ['jquery'],
             exports: 'jQuery.fn.pagination'
@@ -36,6 +42,10 @@ require.config({
         // 弹框插件
         'layer': {
             deps: ['jquery'],
+            exports: 'jQuery.fn.layer'
+        },
+        'layer.ext': {
+            deps: ['layer'],
             exports: 'jQuery.fn.layer'
         },
         // 日期插件

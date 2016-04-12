@@ -15,6 +15,8 @@ var productTag=require('./product/productTag');
 var productCategory=require('./product/productCategory');
 var productBrand=require('./product/productBrand');
 var productType=require('./product/productType');
+var productSpecifications=require('./product/productSpecifications');
+var productParams=require('./product/productParams');
 
 
 ////商品分类
@@ -56,6 +58,8 @@ router.use('/producttag',productTag);
 router.use('/productcategory',productCategory);
 router.use('/productbrand',productBrand);
 router.use('/producttype',productType);
+router.use('/productspecifications',productSpecifications);
+router.use('/productparams',productParams);
 
 //router.use('/productItem',productItem);
 //router.use('/procuctTag',procuctTag);

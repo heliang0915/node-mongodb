@@ -19,6 +19,7 @@ router.all('/', function (req, res, next) {
     //上传完成后处理
     form.parse(req, function (err, fields, files) {
         var filesTmp = JSON.stringify(files, null, 2);
+
         var fileInput;
         for (var key in files) {
             fileInput = key;
@@ -26,12 +27,12 @@ router.all('/', function (req, res, next) {
         if (err) {
             console.log('parse error: ' + err);
         } else {
-            console.log(files);
             if (files) {
                 var inputFile = files[fileInput][0];
-                console.log(JSON.stringify(inputFile));
                 var uploadedPath = inputFile.path;
                 var fileName = inputFile.originalFilename;
+                var fieldName = inputFile.fieldName;
+                console.log("fieldName>>>"+fieldName);
                 var dstPath = uploadDir + fileName;
 
                 //重命名为真实文件名
@@ -42,7 +43,7 @@ router.all('/', function (req, res, next) {
                         res.write("<script>parent.uploadSuccess('" + err + "')</script>");
                     } else {
                         console.log('uploadSuccess ' + fileName);
-                        res.write("<script>parent.uploadSuccess(null,'" + fileName + "')</script>");
+                        res.write("<script>parent.uploadSuccess(null,'" + fileName + "','"+fieldName+"')</script>");
                     }
                     res.end();
                 });

@@ -5,6 +5,7 @@ var express = require('express');
 var router = express.Router();
 var util = require("../../util/util");
 var productCategoryDao = require('../../dao/product/productCategoryDao');
+var productTypeDao = require('../../dao/product/productTypeDao');
 var message = require("../../util/message");
 var config = require("../../config");
 
@@ -51,10 +52,33 @@ router.route('/page').all(function (req, res) {
     console.log(".......page");
     var currentPage = params.currentPage;
     var searchData = util.getSearchData(params);
-    productCategoryDao.page(currentPage, searchData, function (err, productTags) {
-        var json = {};
-        json.data = productTags;
-        res.send(json);
+    productCategoryDao.page(currentPage, searchData, function (err, productCategorys) {
+        var count = 0;
+        var len = productCategorys.length;
+        productCategorys.forEach(function (productCategory) {
+            //获取商品类型
+            productTypeDao.setModelName(config[config.productType.module]["module"]);
+            //查询产品类型
+            productTypeDao.find({uuid: productCategory.productType}, function (err, productType) {
+                count++;
+                if (err) {
+                    util.showErr(res, err);
+                } else {
+                    if (productType[0]) {
+                        productCategory._doc.typeName = productType[0].typeName;
+                    } else {
+                        productCategory._doc.typeName = "";
+                    }
+                }
+                if (count == len) {
+                    var json = {};
+                    json.data = productCategorys;
+                    res.send(json);
+                }
+
+            });
+        })
+
     }, {order: 1});
 });
 
@@ -67,14 +91,26 @@ router.route('/modify').all(function (req, res) {
             if (err) {
                 util.showErr(res, err);
             } else {
-                res.render(config.productCategory.modifyPage, {
-                    productCategory: productCategory
+                //获取商品类型
+                productTypeDao.setModelName(config[config.productType.module]["module"]);
+                //查询产品类型
+                productTypeDao.findAll(function (err, productTypes) {
+                    if (err) {
+                        util.showErr(res, err);
+                    } else {
+                        res.render(config.productCategory.modifyPage, {
+                            productCategory: productCategory,
+                            productTypes: productTypes
+                        });
+
+                    }
                 });
             }
         });
     } else {
         res.render(config.productCategory.modifyPage, {
-            productCategory: {}
+            productCategory: {},
+            productTypes: []
         });
     }
 });
@@ -146,43 +182,42 @@ router.route('/getCategoryRankTree').all(function (req, res) {
         if (err) {
             console.log(err);
         } else {
-            if(docs){
-                if(docs.length>0){
+            if (docs) {
+                if (docs.length > 0) {
                     docs.forEach(function (item) {
                         var node = {};
                         node["id"] = item.uuid;
                         node["name"] = item.categoryName;
                         //(function (node, item) {
-                            productCategoryDao.isParent(item.uuid, function (err, isParent) {
-                                if (err) {
-                                    console.log(err);
-                                } else {
-                                    ++counter;
-                                    node["isParent"] = isParent;
-                                    if (id) {
-                                        if (id != item.uuid) {
-                                            tree.push(node);
-                                        }
-                                    } else {
+                        productCategoryDao.isParent(item.uuid, function (err, isParent) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                ++counter;
+                                node["isParent"] = isParent;
+                                if (id) {
+                                    if (id != item.uuid) {
                                         tree.push(node);
                                     }
-
-                                    if (counter == docs.length) {
-                                        console.log("tree"+tree);
-                                        res.send(tree);
-                                    }
+                                } else {
+                                    tree.push(node);
                                 }
-                            })
+
+                                if (counter == docs.length) {
+                                    console.log("tree" + tree);
+                                    res.send(tree);
+                                }
+                            }
+                        })
                         //})(node, item)
                     })
-                }else{
+                } else {
                     res.send(tree);
                 }
 
-            }else{
+            } else {
                 res.send(tree);
             }
-
 
 
         }

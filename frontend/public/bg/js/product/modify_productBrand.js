@@ -1,4 +1,6 @@
 require(["form","upload"], function (form,upload) {
+    form.init();
+
     $("#logo_tip").css({
         top:9,
         left:310

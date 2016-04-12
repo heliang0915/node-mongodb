@@ -9,20 +9,24 @@ define(["util","lay"],function(util,layer){
     var reg = /\{(\w+)\}/g;
     var selectorDom = $("input[required='true'],select[required='true']");
     var formOpt = {
-        init: function () {
-            this.initEvent();
+        init: function (saveCallback) {
+            this.initEvent(saveCallback);
             this.initCheck();
         },
-        initEvent: function () {
+        initEvent: function (saveCallback) {
             var _this = this;
             //保存按钮事件
             saveBtn.on('click', function () {
                 var flag = _this.validate();
+                var result=typeof saveCallback =="function"?saveCallback():true;
+                if(result==false){
+                    layer.msg("程序主动停止了提交操作,停止操作方法为<br>"+saveCallback, {time: 3000, icon:5});
+                    return ;
+                }
                 var url=formDom.attr("action");
                 var  uuid=$("#uuid").val();
                 var data=formDom.serializeObject();
-                console.log("data>>>"+data);
-                if(flag){
+                if(flag&&result){
                     util.ajax(url,function (json) {
                         var msg=json.msg;
                         var state=json.state;
@@ -103,7 +107,7 @@ define(["util","lay"],function(util,layer){
             return flag;
         }
     }
-    formOpt.init();
+    //formOpt.init();
     return formOpt;
 })
 

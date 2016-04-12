@@ -5,11 +5,13 @@ define(['lay'], function (layer) {
         //加载loadding
         layer.load(0, {shade: false});
         params = params == undefined ? {} : params;
+        //url+=(url.indexOf('&')>-1?"&jsoncallback=?"+:"?jsoncallback=?");
         $.ajax({
             type: 'post',
             url: url,
             data: params,
             dateType: 'json',
+            //dataType: "jsonp",
             success: function (data) {
                 if (callback && typeof callback == "function") {
                     callback(data);

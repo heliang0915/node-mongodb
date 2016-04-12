@@ -1,0 +1,109 @@
+body {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.item-table {
+    /*max-width: 56%;*/
+}
+
+.item-table td {
+    text-align: left;
+    line-height: 40px;
+}
+
+.item-table td a {
+    color: #999;
+    height: 40px;
+    line-height: 40px;
+}
+
+.item-title td {
+    font-size: 14px;
+    padding: 0px 420px 0px 0px;
+}
+
+.item-input {
+    width: 450px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+    outline: none;
+    margin-right: 20px;
+}
+
+.item-color {
+    display: none;
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    position: relative;
+    top: 6px;
+}
+
+.item-group {
+    display: none;
+}
+
+.item-remove {
+    font-size: 20px;
+}
+
+.item-upload {
+    position: relative;
+    top: -4px;
+    padding: 0 5px;
+}
+
+body {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.item-table td {
+    text-align: left;
+    line-height: 40px;
+}
+
+.item-table td a {
+    color: #999;
+    height: 40px;
+    line-height: 40px;
+}
+
+.item-title td {
+    font-size: 14px;
+}
+
+.item-input {
+    width: 450px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+    outline: none;
+    margin-right: 20px;
+}
+
+.item-color {
+    display: none;
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    position: relative;
+    top: 6px;
+    cursor: pointer;
+}
+
+.item-remove {
+    font-size: 20px;
+}
+
+.item-upload {
+    position: relative;
+    top: -4px;
+    padding: 0 5px;
+}
+
+.layui-layer-page .layui-layer-content{
+    overflow: hidden !important;
+}

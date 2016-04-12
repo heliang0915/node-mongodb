@@ -12,7 +12,8 @@
     <div class="form-group">
         <label class="form-tip">分类名称</label>
         <span class="form-filed">
-            <input type="text" required="true" value="<%=productCategory.categoryName%>" regText="" filedText="分类名称" id="categoryName" autocomplete="off" name="categoryName" placeholder="请输入分类名称...">
+            <input type="text" required="true" value="<%=productCategory.categoryName%>" regText="" filedText="分类名称"
+                   id="categoryName" autocomplete="off" name="categoryName" placeholder="请输入分类名称...">
         </span>
     </div>
 
@@ -20,14 +21,17 @@
         <label class="form-tip">分类图片</label>
         <span class="form-filed upload">
             <span class="btn primary" id="categoryPic_btn" ref="categoryPicUpload">上传</span>
-            <input type="file" class="file" style="display: none"   id="categoryPicUpload"   name="categoryPicUpload" >
-            <input type="text" class="file" style="display: none" required="true" value="<%=productCategory.categoryPic%>" regText="" filedText="分类图片" id="categoryPic"   name="categoryPic" >
+            <input type="file" class="file" style="display: none" id="categoryPicUpload" name="categoryPicUpload">
+            <input type="text" class="file" style="display: none" required="true"
+                   value="<%=productCategory.categoryPic%>" regText="" filedText="分类图片" id="categoryPic"
+                   name="categoryPic">
         </span>
     </div>
     <div class="form-group" id="upload_img_group" style="display:none;">
         <label class="form-tip"></label>
         <span class="form-filed upload">
-            <img  id="category"  style="height: 150px;line-height: 150px; text-align: center;" src="<%=productCategory.categoryPic%>" alt="上传图片">
+            <img id="category" style="height: 150px;line-height: 150px; text-align: center;"
+                 src="<%=productCategory.categoryPic%>" alt="上传图片">
         </span>
     </div>
 
@@ -35,7 +39,8 @@
         <label class="form-tip">是否为顶级分类</label>
         <span class="form-filed">
             <input type="radio" name="isTop" checked="checked" id="no" value="false"><label for="no">否</label>
-            <input type="radio" name="isTop" <%=productCategory.isTop==true?"checked":""%> value="true" id="yes"><label for="yes">是</label>
+            <input type="radio" name="isTop" <%=productCategory.isTop==true?"checked":""%> value="true" id="yes"><label
+                for="yes">是</label>
 
         </span>
     </div>
@@ -43,39 +48,48 @@
         <label class="form-tip" style="vertical-align: top">上级分类</label>
         <span class="form-filed">
             <ul id="parentRankTree" class="ztree select"></ul>
-            <input type="hidden" id="pid" name="pid" value="<%=productCategory.pid%>" >
+            <input type="hidden" id="pid" name="pid" value="<%=productCategory.pid%>">
 
-             <!--<select name="pid" class="select" required="true"    filedText="上级分类"  id="pid">
-                 <option value="">请选择...</option>
+            <!--<select name="pid" class="select" required="true"    filedText="上级分类"  id="pid">
+                <option value="">请选择...</option>
 
-                 <option value="1">水果</option>
-                 <option value="2">香蕉</option>
+                <option value="1">水果</option>
+                <option value="2">香蕉</option>
 
-             </select>-->
+            </select>-->
         </span>
     </div>
     <div class="form-group">
         <label class="form-tip">商品类型</label>
         <span class="form-filed">
-             <select name="productType"  class="select" required="true"   filedText="商品类型"  id="productType">
+             <select name="productType" class="select" required="true" filedText="商品类型" id="productType">
                  <option value="">请选择...</option>
-                 <option value="1">水果 </option>
-                 <option value="2">香蕉</option>
+                 <%productTypes.forEach(function(item){
+                 if(item.uuid==productCategory.productType){%>
+                    <option selected="selected" value="<%=item.uuid%>"><%=item.typeName%></option>
+                 <% }else{ %>
+                     <option value="<%=item.uuid%>"><%=item.typeName%></option>
+                 <% }%>
+
+
+                 <%}) %>
              </select>
         </span>
     </div>
     <div class="form-group">
         <label class="form-tip">排序</label>
         <span class="form-filed">
-            <input type="text" required="true" value="<%=productCategory.order%>" regText="" filedText="排序" id="order" autocomplete="off" name="order" placeholder="请输入排序...">
+            <input type="text" required="true" value="<%=productCategory.order%>" regText="" filedText="排序" id="order"
+                   autocomplete="off" name="order" placeholder="请输入排序...">
         </span>
     </div>
 
     <div class="form-group radio">
         <label class="form-tip">列表中显示</label>
         <span class="form-filed">
-            <input type="radio" name="isShow"value="true" checked="checked" id="showyes"><label for="showyes">是</label>
-            <input type="radio" name="isShow"  <%=productCategory.isShow==false?"checked":""%>   id="showno" value="false"><label for="showno">否</label>
+            <input type="radio" name="isShow" value="true" checked="checked" id="showyes"><label for="showyes">是</label>
+            <input type="radio" name="isShow"  <%=productCategory.isShow==false?"checked":""%>   id="showno" value="false"><label
+                for="showno">否</label>
         </span>
     </div>
 
