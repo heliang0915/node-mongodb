@@ -6,7 +6,7 @@ require(['business', 'util','lay'], function (business, util, layer) {
     pageParams.data =JSON.parse($("#data").val());
     //JSON.stringify(data);
     //浅拷贝
-    member = util.extends(business, member);
+    member = util.extend(business, member);
     //事件回调
     var eventCallback = function () {
         var _this=this;

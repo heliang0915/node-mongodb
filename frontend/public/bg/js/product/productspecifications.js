@@ -5,7 +5,7 @@ require(['business', 'util','lay'], function (business, util, layer) {
     pageParams.url = "/productspecifications/page?temp="+Math.random();
     pageParams.data ={};
     //浅拷贝
-    productspecifications = util.extends(business, productspecifications);
+    productspecifications = util.extend(business, productspecifications);
     //事件回调
     var eventCallback = function () {
         var _this=this;

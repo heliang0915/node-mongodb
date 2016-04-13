@@ -26,15 +26,13 @@ define(['lay'], function (layer) {
         })
     }
     //属性拷贝
-    util.extends = function (_old, _new) {
+    //alert(util.extend);
+    util.extend = function (_old, _new) {
         for (var key in _old) {
             if (!Object.hasOwnProperty(key)) continue;
             _old[key] = _new[key];
         }
         return _old;
     }
-
-
-
     return util;
 });
