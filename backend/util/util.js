@@ -31,10 +31,8 @@ var isNotNullObj = function (obj) {
 exports.getParams = function (req,dao,type) {
     var params = isNotNullObj(req.body) == false ? url.parse(req.url, true).query : req.body;
     if(type){
-        console.log("-----"+config[type]["module"]);
         dao.setModelName(config[type]["module"]);
     }
-
     return params;
 }
 
@@ -49,7 +47,6 @@ exports.getSearchData = function (params) {
             continue;
         }
         var val = params[key];
-        console.log("val-----------" + val);
         data[key] = params[key];
         ary.push(data);
     }

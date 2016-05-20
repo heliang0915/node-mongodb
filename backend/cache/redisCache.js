@@ -6,9 +6,9 @@ var redisClient = redis.createClient(6379, config.redis_host, {});
 var keys = {};
 var RedisCache = {
     loadALL: function () {
-        //redisClient.set("name", "张三", function () {
+        // redisClient.set("name", "张三", function () {
         //    console.log("数据插入成功");
-        //})
+        // })
         redisClient.get("name", function (err, data) {
             console.log(data);
         });

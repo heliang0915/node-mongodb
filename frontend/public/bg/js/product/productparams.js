@@ -97,7 +97,7 @@ require(['business', 'util', 'lay', 'json2'], function (business, util, layer) {
         datas.params = JSON.stringify(data);
         datas.ref = refuuid;
         datas.uuid = uuid;
-        var url = "/productparams/save";
+        var url = "/manager/productparams/save";
         util.ajax(url, function (json) {
             var msg = json.msg;
             var state = json.state;

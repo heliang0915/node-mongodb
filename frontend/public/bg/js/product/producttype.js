@@ -2,7 +2,7 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
     var producttype = {};
     //分页回调
     var pageParams = {};
-    pageParams.url = "/producttype/page?temp=" + Math.random();
+    pageParams.url = "/manager/producttype/page?temp=" + Math.random();
     pageParams.data = {};
     //JSON.stringify(data);
     //浅拷贝
@@ -12,7 +12,7 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
         var _this = this;
         //添加动作
         $('#add').on('click', function () {
-            window.location.href = "/producttype/modify";
+            window.location.href = "/manager/producttype/modify";
         })
         //修改动作
         $('a[name=modify]').on('click', function () {
@@ -22,7 +22,7 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
         //删除动作
         $('#del').on('click', function () {
             producttype.del("producttype", function () {
-                window.location.href = "/producttype/list";
+                window.location.href = "/manager/producttype/list";
             });
         })
         //重置复选框
@@ -45,25 +45,26 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
             var title = "";
             var url = "";
             var index = 0;
+            alert(uuid);
             switch (fileName) {
                 case "attr":
                     title = "属性";
-                    url = "";
+                    url = "/manager/productattrs/list?uuids="+uuid;
                     break;
                 case "params":
                     title = "参数";
-                    url = "/productparams?ref="+uuid;
+                    url = "/manager/productparams?ref="+uuid;
                     index = 1;
                     break;
                 case "brand":
                     title = "关联品牌";
                     index = 2;
-                    url = '/producttype/relationspec?type=' + index + "&uuids=" + uuids + "&uuid=" + uuid;
+                    url = '/manager/producttype/relationspec?type=' + index + "&uuids=" + uuids + "&uuid=" + uuid;
                     break;
                 case "specifications":
                     title = "关联规格";
                     index = 3;
-                    url = '/producttype/relationspec?type=' + index + "&uuids=" + uuids + "&uuid=" + uuid;
+                    url = '/manager/producttype/relationspec?type=' + index + "&uuids=" + uuids + "&uuid=" + uuid;
                     break;
             }
 
@@ -108,12 +109,14 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
         var _this = this;
         //uuids==undefined?"":uuids;
         title = "[" + title + "] 对话框";
-
         var w = '600px';
         var h = '350px';
         if (index == 2 || index == 3) {
             w = '500px';
             h = '300px';
+        }else if(index==0){
+            w ="1000px";
+            h = '500px';
         }
         layer.open({
             type: 2,
@@ -129,7 +132,7 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
                         return;
                     }
                     var data = {};
-                    var url = "/producttype/saveUUID";
+                    var url = "/manager/producttype/saveUUID";
                     data.uuids = uuids;
                     data.type = index;
                     data.uuid = uuid;
@@ -156,6 +159,11 @@ require(['business', 'util', 'lay', 'common'], function (business, util, layer, 
             }
         });
     }
+
+
+
+
+
     //获取uuids
     producttype.getSelectedUUIDS = function () {
         var iframe = $('iframe');

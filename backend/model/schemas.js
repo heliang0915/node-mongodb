@@ -83,8 +83,11 @@ var productType = new Schema({
 var productAttr = new Schema({
     uuid: String,
     attrName: {type: String, default: ''},//属性名称
+    type:{type:String,default:'0'}, //类型 0 为输入项 1为下拉
     attrSelectItem: {type: String, default: ''},//选择项(逗号分隔)
     unit: {type: String, default: ''}, //单位
+    isrequire: {type: Boolean, default: false}, //是否必填
+    isvalidate: {type: Boolean, default: false}, //是否校验
     ref: {type: String, default: ''}, //关联分类
     time: {type: String, default: new Date().getTime()}, //创建记录时间 默认排序标志
     order: Number  //排序

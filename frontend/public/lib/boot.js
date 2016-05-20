@@ -6,6 +6,7 @@ require.config({
     paths: {
         //第三方
         "jquery": "/lib/jquery.min",
+       // "jquery.rotate": "/lib/jquery.rotate",
         "json2": "/lib/json2",
         "text": "/lib/text",
         "moment": "/lib/moment",
@@ -23,6 +24,12 @@ require.config({
         "tree": "/weight/tree/tree",
         "util": "/bg/js/util",
 
+        //前端使用组件
+        "weight": '/weight/weight',
+        "dialog": '/weight/dialog/dialog',
+        "tab": '/weight/tab/tab',
+        "banner": '/weight/banner/banner',
+        "alert": '/weight/dialog/alert/alert',
 
         //业务js
         "form": "/bg/js/form",

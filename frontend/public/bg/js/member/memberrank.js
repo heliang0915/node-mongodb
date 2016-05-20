@@ -2,7 +2,7 @@ require(['business', 'util','lay'], function (business, util, layer) {
     var memberrank = {};
     //分页回调
     var pageParams = {};
-    pageParams.url = "/memberrank/page?temp="+Math.random();
+    pageParams.url = "/manager/memberrank/page?temp="+Math.random();
     pageParams.data ={};
     //JSON.stringify(data);
     //浅拷贝
@@ -12,17 +12,17 @@ require(['business', 'util','lay'], function (business, util, layer) {
         var _this=this;
         //添加动作
         $('#add').on('click', function () {
-            window.location.href="/memberrank/modify";
+            window.location.href="/manager/memberrank/modify";
         })
         //修改动作
         $('a[name=modify]').on('click',function(){
             var uuid=$(this).attr('data');
-            window.location.href="/memberrank/modify?uuid="+uuid;
+            window.location.href="/manager/memberrank/modify?uuid="+uuid;
         })
         //删除动作
         $('#del').on('click', function () {
             memberrank.del("memberrank",function(){
-                window.location.href="/memberrank/list";
+                window.location.href="/manager/memberrank/list";
             });
         })
         //重置复选框

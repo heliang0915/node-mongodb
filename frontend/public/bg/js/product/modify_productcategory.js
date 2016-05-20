@@ -33,7 +33,6 @@ require(["form", "upload", 'tree'], function (form, upload, mytree) {
             $("#pid").val(treeNode.id);
         },
         getUrl: function (treeId, treeNode) {
-            console.log("url" + treeId);
             var pid = treeNode.id;
             var uuid=$("#uuid").val();
             return "./getCategoryRankTree?pid=" + pid+"&id="+uuid;

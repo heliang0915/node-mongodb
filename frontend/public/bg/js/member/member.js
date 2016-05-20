@@ -2,7 +2,7 @@ require(['business', 'util','lay'], function (business, util, layer) {
     var member = {};
     //分页回调
     var pageParams = {};
-    pageParams.url = "/member/page?temp="+Math.random();
+    pageParams.url = "/manager/member/page?temp="+Math.random();
     pageParams.data =JSON.parse($("#data").val());
     //JSON.stringify(data);
     //浅拷贝
@@ -12,17 +12,17 @@ require(['business', 'util','lay'], function (business, util, layer) {
         var _this=this;
         //添加动作
         $('#add').on('click', function () {
-            window.location.href="/member/modify";
+            window.location.href="/manager/member/modify";
         })
         //修改动作
         $('a[name=modify]').on('click',function(){
             var uuid=$(this).attr('data');
-            window.location.href="/member/modify?uuid="+uuid;
+            window.location.href="/manager/member/modify?uuid="+uuid;
         })
         //删除动作
         $('#del').on('click', function () {
             member.del("member",function(){
-                window.location.href="/member/list";
+                window.location.href="/manager/member/list";
             });
         })
 
@@ -30,7 +30,7 @@ require(['business', 'util','lay'], function (business, util, layer) {
         $('#search').on('click', function () {
             var key=$("#searchInput").val();
             var keyStr="?userName="+key+"&name="+key+"&tel="+key;
-            window.location.href="/member/list"+keyStr;
+            window.location.href="/manager/member/list"+keyStr;
         });
 
         //重置复选框

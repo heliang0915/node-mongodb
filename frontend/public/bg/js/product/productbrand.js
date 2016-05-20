@@ -2,7 +2,7 @@ require(['business', 'util','lay'], function (business, util, layer) {
     var productbrand = {};
     //分页回调
     var pageParams = {};
-    pageParams.url = "/productbrand/page?temp="+Math.random();
+    pageParams.url = "/manager/productbrand/page?temp="+Math.random();
     pageParams.data ={};
     //JSON.stringify(data);
     //浅拷贝
@@ -12,17 +12,17 @@ require(['business', 'util','lay'], function (business, util, layer) {
         var _this=this;
         //添加动作
         $('#add').on('click', function () {
-            window.location.href="/productbrand/modify";
+            window.location.href="/manager/productbrand/modify";
         })
         //修改动作
         $('a[name=modify]').on('click',function(){
             var uuid=$(this).attr('data');
-            window.location.href="/productbrand/modify?uuid="+uuid;
+            window.location.href="/manager/productbrand/modify?uuid="+uuid;
         })
         //删除动作
         $('#del').on('click', function () {
             productbrand.del("productbrand",function(){
-                window.location.href="/productbrand/list";
+                window.location.href="/manager/productbrand/list";
             });
         })
         //重置复选框

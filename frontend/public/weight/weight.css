@@ -1,0 +1,196 @@
+/*公共样式*/
+.icon {
+    background: url(/fg/images/icon.png) no-repeat;
+}
+
+.icon.close {
+    background-position: 0px -40px;
+}
+
+/*input样式*/
+.input {
+    padding: 13px;
+    width: 260px;
+    padding: 13px 53px 13px 13px;
+    border: 1px solid #ccc;
+    outline: none;
+    border-radius: 2px;
+}
+
+.input:focus {
+    border: 1px solid #2AA3CE;
+}
+
+.input.err {
+    border: 1px solid #FF9966;
+}
+
+.input-label {
+    font-size: 16px;
+    padding: 0 10px;
+    width: 56px;
+    display: inline-block;
+    text-align: right;
+}
+
+.input-box {
+    text-align: center;
+    margin: 20px;
+    position: relative;
+}
+
+.input-box i {
+    font-family: iconfont;
+    font-size: 26px;
+    color: #999;
+    font-style: normal;
+    position: absolute;
+    right: 56px;
+    top: 9px;
+}
+
+/*按钮*/
+.btn {
+    display: inline-block;
+    margin: 2px 0px 20px 30px;
+    padding: 11px 0px;
+    border: 1px #dedede solid;
+    background-color: #f1f1f1;
+    color: #333;
+    border-radius: 3px;
+    font-weight: 400;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    width: 173px;
+}
+
+.btn-normal {
+    width: 150px;
+}
+
+.btn.simall {
+    padding: 10px 15px;
+    font-size: 12px;
+    width: 100px;
+    margin-top: 15px;
+}
+
+.btn.primary {
+    border-color: #4898d5;
+    background-color: #2e8ded;
+    color: #fff;
+}
+
+
+.primary:hover {
+    background: #2388AB;
+    border-color: #2388AB;;
+}
+
+
+.btn-green{
+    color: #FFF;
+    text-align: center;
+    background-color: #A0CA6B;
+    border: 1px solid #A0CA6B;
+}
+
+.btn-blue{
+    color: #FFF;
+    text-align: center;
+    background-color: #4898d5;
+    border: 1px solid #4898d5;
+}
+.btn-orange {
+    color: #FFF;
+    text-align: center;
+    background-color: #FA8128;
+    border: 1px solid #FA8128;
+}
+
+.btn-disabled{
+    color: #ABABAB;
+    text-align: center;
+    background-color: #DDD;
+    border: 1px solid #DDD;
+}
+/*tab样式开始*/
+.tab-wrap {
+    width: 100%;
+}
+
+.tab-header {
+    list-style: none;
+}
+
+.lf li {
+    float: left;
+}
+
+.lf li.active {
+    margin-right: 1px;
+}
+
+.lr li {
+    float: right;
+}
+
+.tab-header li {
+    /*float: left;*/
+    border: 1px solid #ccc;
+    border-bottom: 1px solid #c81623;
+    position: relative;
+    top: 0px;
+    margin-left: -1px;
+    z-index: 1;
+}
+
+.tab-header li.active {
+    border: 1px solid #c81623;
+    border-top: 3px solid #c81623;
+    border-bottom: #fff 1px solid;
+    position: relative;
+    z-index: 4;
+}
+
+.tab-header li a {
+    display: block;
+    padding: 10px 20px;
+    color: #999;
+}
+
+.tab-header li.active a {
+    padding: 8px 20px 10px 20px;
+    color: #c81623;
+    /*font-weight: bold;*/
+}
+
+.tab-list {
+    clear: both;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    position: relative;
+    top: -1px;
+    margin-left: -1px;
+    border-top: 1px solid #c81623;
+}
+
+/*.tab-list.active {
+	border-top: 1px solid #c81623;
+}*/
+
+.tab-item {
+    float: left;
+    display: none;
+    padding: 10px 4px;
+    width: 100%;
+}
+
+.tab-item.active {
+    display: block;
+}
+/*tab样式结束*/
+
+
