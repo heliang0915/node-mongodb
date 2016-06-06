@@ -1,4 +1,4 @@
-define(['text!/weight/datepicker/need/laydate.css','laydate'], function (cssText,laydate) {
+define(['text!/../weight/datepicker/need/laydate.css','laydate'], function (cssText,laydate) {
     var styleEl = document.getElementById('datepicker-style');
     if (styleEl) {
         var con = $(styleEl).html();
@@ -7,7 +7,7 @@ define(['text!/weight/datepicker/need/laydate.css','laydate'], function (cssText
     } else {
         $('head').append('<style type="text/css" id="datepicker-style">' + cssText + '</style>');
     }
-    laydate.skin('../../../weight/datepicker/skins/molv');//切换皮肤，请查看skins下面皮肤库
+    laydate.skin('../../../../weight/datepicker/skins/molv');//切换皮肤，请查看skins下面皮肤库
     var Datepicker = {};
     return Datepicker;
 });
