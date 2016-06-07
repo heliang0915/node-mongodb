@@ -49,35 +49,42 @@ router.route('/list').all(function (req, res) {
 //ajax分页
 router.route('/page').all(function (req, res) {
     var params = util.getParams(req, productCategoryDao, config.productCategory.module);
-    console.log(".......page");
+    console.log(".......page>>>>>11");
     var currentPage = params.currentPage;
     var searchData = util.getSearchData(params);
     productCategoryDao.page(currentPage, searchData, function (err, productCategorys) {
         var count = 0;
         var len = productCategorys.length;
-        productCategorys.forEach(function (productCategory) {
-            //获取商品类型
-            productTypeDao.setModelName(config[config.productType.module]["module"]);
-            //查询产品类型
-            productTypeDao.find({uuid: productCategory.productType}, function (err, productType) {
-                count++;
-                if (err) {
-                    util.showErr(res, err);
-                } else {
-                    if (productType[0]) {
-                        productCategory._doc.typeName = productType[0].typeName;
+        if(len==0){
+            var json = {};
+            json.data = [];
+            res.send(json);
+        }else{
+            productCategorys.forEach(function (productCategory) {
+                //获取商品类型
+                productTypeDao.setModelName(config[config.productType.module]["module"]);
+                //查询产品类型
+                productTypeDao.find({uuid: productCategory.productType}, function (err, productType) {
+                    count++;
+                    if (err) {
+                        util.showErr(res, err);
                     } else {
-                        productCategory._doc.typeName = "";
+                        if (productType[0]) {
+                            productCategory._doc.typeName = productType[0].typeName;
+                        } else {
+                            productCategory._doc.typeName = "";
+                        }
                     }
-                }
-                if (count == len) {
-                    var json = {};
-                    json.data = productCategorys;
-                    res.send(json);
-                }
+                    if (count == len) {
+                        var json = {};
+                        json.data = productCategorys;
+                        res.send(json);
+                    }
 
-            });
-        })
+                });
+            })
+        }
+
 
     }, {order: 1});
 });
