@@ -49,7 +49,7 @@ require(['business', 'util','lay'], function (business, util, layer) {
     pageParams.callback = function (json) {
         var data=json.data;
         //分页回调
-        var showFileds = {"userName": "", "tel": "", "rank": "", "email": "", "sex": ""}
+        var showFileds = {"userName": "", "tel": "", "rankName": "", "email": "", "sex": ""}
         var html = "";
         for (var i = 0; i < data.length; i++) {
             var item = data[i];
