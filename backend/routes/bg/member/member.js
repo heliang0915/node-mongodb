@@ -47,9 +47,22 @@ router.route('/page').all(function (req, res) {
     var currentPage = params.currentPage;
     var searchData = util.getSearchData(params);
     memberDao.page(currentPage, searchData, function (err, members) {
-        var json = {};
-        json.data = members;
-        res.send(json);
+        var len=members.length;
+        //查询用户等级
+        memberRankDao.setModelName(config[config.memberRank.module]["module"]);
+        var memberList=[];
+        members.forEach(function(member,i){
+            memberRankDao.findByUUID(member.rank,function (err, memberRank) {
+                member._doc.rankName=memberRank.name;
+                memberList.push(member);
+                if(i==len-1){ //到达最后一个元素
+                    var json = {};
+                    json.data = memberList;
+                    res.send(json);
+                }
+
+            });
+        });
     });
 });
 
